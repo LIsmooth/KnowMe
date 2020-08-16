@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.leif.knowme.mapper.AccountMapper">
+
+    <resultMap id="AccountMap1" type="com.leif.knowme.model.AccountDo">
+        <id column="account_id" property="accountId"/>
+        <result property="accountName" column="account_name"/>
+        <result property="password" column="password"/>
+        <association property="userDo" javaType="com.leif.knowme.model.UserDo">
+            <id column="user_id" property="userId"/>
+            <result property="name" column="name"/>
+            <result property="birthday" column="birthday"/>
+        </association>
+    </resultMap>
+    <resultMap id="AccountMap2" type="com.leif.knowme.model.AccountDo">
+        <id column="account_id" property="accountId"/>
+        <result property="accountName" column="account_name"/>
+        <result property="password" column="password"/>
+        <association property="userDo" select="com.leif.knowme.mapper.UserMapper.getUserById" column="user_id" />
+    </resultMap>
+    <select id="getAccountById" resultMap="AccountMap2">
+        SELECT *
+        from t_account
+        where account_id = #{accountId}
+    </select>
+
+    <select id="getAccountById1" resultMap="AccountMap1">
+        SELECT *
+        from t_account a,
+             t_user u
+        where account_id = #{accountId}
+          and a.user_id = u.user_id
+    </select>
+</mapper>

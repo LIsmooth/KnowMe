@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    active: proc
+  jackson:
+    time-zone: GMT+8
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  type-aliases-package: com.leif.knowme.model
+  config-location: classpath:mybatis/mybatis-config.xml

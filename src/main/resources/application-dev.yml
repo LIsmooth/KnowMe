@@ -1,0 +1,10 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    name: test
+    url: jdbc:mysql://192.168.253.129:3306/knowme
+    username: root
+    password: 650728
+    driver-class-name: com.mysql.cj.jdbc.Driver

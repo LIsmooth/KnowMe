@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.leif.knowme.mapper.UserMapper">
+
+    <select id="getUserById" resultType="UserDo">
+        SELECT *
+        from t_user
+        where user_id = #{0}
+    </select>
+    <select id="getUserByIdAndName" resultType="UserDo">
+        SELECT *
+        from t_user
+        where user_id = #{id}
+          and name = #{name}
+    </select>
+    <update id="updateUser" parameterType="UserDo">
+        update t_user
+        set name=#{name} and birthday = #{birthday}
+        where user_id = #{userId}
+    </update>
+    <insert id="saveUser" parameterType="UserDo">
+        insert into t_user(user_id, name, birthday)
+        values (#{userId}, #{name}, #{birthday})
+    </insert>
+    <delete id="removeUserById">
+        delete
+        from t_user
+        where user_id = #{userId}
+    </delete>
+</mapper>
