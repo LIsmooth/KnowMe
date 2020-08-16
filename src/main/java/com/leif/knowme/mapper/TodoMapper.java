@@ -8,4 +8,6 @@ public interface TodoMapper {
     int createTodo(TodoDo todoDo);
 
     List<TodoDo> generateSchedule(String userId);
+
+    boolean deleteAll(String userId);
 }

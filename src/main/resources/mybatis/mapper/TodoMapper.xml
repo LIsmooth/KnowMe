@@ -7,6 +7,12 @@
         from t_todo
         where user_id = #{0}
     </select>
+
+    <select id="generateSchedule" resultType="TodoDo">
+        select * from t_todo where user_id=#{userId} order by created;
+    </select>
+
+
     <update id="updateTodo" parameterType="TodoDo">
         update t_todo
         set event_msg=#{event_msg},
@@ -15,14 +21,15 @@
     </update>
     <insert id="createTodo" parameterType="TodoDo" keyProperty="todoId" useGeneratedKeys="true">
         insert into t_todo(user_id, time_consumed, todo_time, event_msg)
-        values (#{userId}, #{timeConsumed}, #{todoTime}, #{event})
+        values (#{userId}, #{timeConsumed}, #{todoTime}, #{eventMsg})
     </insert>
     <delete id="removeTodo">
         delete
         from t_todo
         where todo_id = #{todoId}
     </delete>
-    <select id="generateSchedule" resultType="TodoDo">
-        select * from t_todo where user_id=#{userId} order by created;
-    </select>
+    <delete id="deleteAll" parameterType="String">
+        delete from t_todo where user_id=#{userId}
+    </delete>
+
 </mapper>

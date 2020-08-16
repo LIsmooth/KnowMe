@@ -18,8 +18,8 @@ public class TodoController {
     @Autowired
     TodoService todoService;
 
-    @PutMapping(headers = "Accept=application/json")
-    public int save(@RequestBody TodoDo todoDo) {
+    @PutMapping(value = "/create" ,headers = "Accept=application/json")
+    public int createTodo(@RequestBody TodoDo todoDo) {
         return todoService.createTodo(todoDo);
     }
 
@@ -27,7 +27,18 @@ public class TodoController {
     public Schedule generateTodos(@PathVariable String userId,
                                   @PathVariable @DateTimeFormat(pattern = "yyyyMMddHHmm") Date beginTime)
             throws AppException {
-        System.out.println(beginTime);
         return todoService.generateSchedule(userId, beginTime);
+    }
+
+    @DeleteMapping(value = "/delete/{userId}")
+    public boolean deleteAll(@PathVariable String userId) {
+        return todoService.deleteAll(userId);
+    }
+
+    @GetMapping(value = "/showschedule/{userId}/{beginTime}")
+    public String showSchedule(@PathVariable String userId,
+                               @PathVariable @DateTimeFormat(pattern = "yyyyMMddHHmm") Date beginTime)
+            throws AppException {
+        return todoService.showSchedule(userId, beginTime);
     }
 }

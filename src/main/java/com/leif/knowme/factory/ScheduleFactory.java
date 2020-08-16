@@ -16,7 +16,7 @@ public class ScheduleFactory {
 
     public Schedule buildFromTodos(Date beginTime, List<TodoDo> todoDos) throws AppException {
         if (todoDos == null || todoDos.size() == 0) {
-            throw new AppException("someThing wrong");
+            throw new AppException("No todo");
         }
         List<ScheduleItem> items=new ArrayList<>(todoDos.size());
         Calendar calendar=Calendar.getInstance();
