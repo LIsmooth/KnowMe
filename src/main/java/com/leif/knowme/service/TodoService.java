@@ -36,4 +36,8 @@ public class TodoService {
     public String showSchedule(String userId, Date beginTime) throws AppException {
         return generateSchedule(userId,beginTime).toString();
     }
+
+    public boolean deleteById(long todoId){
+        return todoMapper.deleteById(todoId);
+    }
 }

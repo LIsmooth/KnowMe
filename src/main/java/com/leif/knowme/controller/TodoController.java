@@ -23,16 +23,21 @@ public class TodoController {
         return todoService.createTodo(todoDo);
     }
 
+    @DeleteMapping(value = "/delete/userid/{userId}")
+    public boolean deleteAll(@PathVariable String userId) {
+        return todoService.deleteAll(userId);
+    }
+
+    @DeleteMapping(value="/delete/todoid/{todoId}")
+    public boolean deleteByTodoId(@PathVariable long todoId){
+        return todoService.deleteById(todoId);
+    }
+
     @GetMapping(value = "/show/{userId}/{beginTime}")
     public Schedule generateTodos(@PathVariable String userId,
                                   @PathVariable @DateTimeFormat(pattern = "yyyyMMddHHmm") Date beginTime)
             throws AppException {
         return todoService.generateSchedule(userId, beginTime);
-    }
-
-    @DeleteMapping(value = "/delete/{userId}")
-    public boolean deleteAll(@PathVariable String userId) {
-        return todoService.deleteAll(userId);
     }
 
     @GetMapping(value = "/showschedule/{userId}/{beginTime}")
@@ -41,4 +46,5 @@ public class TodoController {
             throws AppException {
         return todoService.showSchedule(userId, beginTime);
     }
+
 }

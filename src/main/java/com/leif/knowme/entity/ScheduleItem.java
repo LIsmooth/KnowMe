@@ -7,27 +7,21 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class ScheduleItem {
+    long todoId;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date beginTime;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date endTime;
     private String itemNote;
-    private int timeConsumed;
+    private Integer planConsumed;
 
     public ScheduleItem(TodoDo todo, Calendar calendar) {
-        this.beginTime=calendar.getTime();
-        calendar.add(Calendar.MINUTE, todo.getTimeConsumed());
-        this.endTime=calendar.getTime();
-        this.itemNote=todo.getEventMsg();
-        this.timeConsumed=todo.getTimeConsumed();
-    }
-
-    public int getTimeConsumed() {
-        return timeConsumed;
-    }
-
-    public void setTimeConsumed(int timeConsumed) {
-        this.timeConsumed = timeConsumed;
+        this.todoId = todo.getTodoId();
+        this.beginTime = calendar.getTime();
+        calendar.add(Calendar.MINUTE, todo.getPlanConsumed());
+        this.endTime = calendar.getTime();
+        this.itemNote = todo.getEventMsg();
+        this.planConsumed = todo.getPlanConsumed();
     }
 
     @Override
@@ -61,5 +55,21 @@ public class ScheduleItem {
 
     public void setItemNote(String itemNote) {
         this.itemNote = itemNote;
+    }
+
+    public Integer getPlanConsumed() {
+        return planConsumed;
+    }
+
+    public void setPlanConsumed(Integer planConsumed) {
+        this.planConsumed = planConsumed;
+    }
+
+    public long getTodoId() {
+        return todoId;
+    }
+
+    public void setTodoId(long todoId) {
+        this.todoId = todoId;
     }
 }

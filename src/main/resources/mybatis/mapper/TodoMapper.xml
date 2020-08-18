@@ -16,14 +16,14 @@
     <update id="updateTodo" parameterType="TodoDo">
         update t_todo
         set event_msg=#{event_msg},
-            time_consumed = #{timeConsumed}
+            plan_consumed = #{planConsumed}
         where todo_id = #{todoId}
     </update>
     <insert id="createTodo" parameterType="TodoDo" keyProperty="todoId" useGeneratedKeys="true">
-        insert into t_todo(user_id, time_consumed, todo_time, event_msg)
-        values (#{userId}, #{timeConsumed}, #{todoTime}, #{eventMsg})
+        insert into t_todo(user_id, plan_consumed, todo_time, event_msg)
+        values (#{userId}, #{planConsumed}, #{todoTime}, #{eventMsg})
     </insert>
-    <delete id="removeTodo">
+    <delete id="deleteById">
         delete
         from t_todo
         where todo_id = #{todoId}

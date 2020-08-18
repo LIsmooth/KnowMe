@@ -5,44 +5,45 @@ import java.util.Date;
 
 public class TodoDo {
 
-    private long todoId;
-    private int timeConsumed;
+    private Long todoId;
+    private Integer planConsumed;
+    private Integer realConsumed;
+    private Integer type;
     private Date todoTime;
     private String eventMsg;
     private String userId;
     private Date created;
 
-
-    public Date getCreated() {
-        return created;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public long getTodoId() {
+    public Long getTodoId() {
         return todoId;
     }
 
-    public void setTodoId(long todoId) {
+    public void setTodoId(Long todoId) {
         this.todoId = todoId;
     }
 
-    public int getTimeConsumed() {
-        return timeConsumed;
+    public Integer getPlanConsumed() {
+        return planConsumed;
     }
 
-    public void setTimeConsumed(int timeConsumed) {
-        this.timeConsumed = timeConsumed;
+    public void setPlanConsumed(Integer planConsumed) {
+        this.planConsumed = planConsumed;
+    }
+
+    public Integer getRealConsumed() {
+        return realConsumed;
+    }
+
+    public void setRealConsumed(Integer realConsumed) {
+        this.realConsumed = realConsumed;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public Date getTodoTime() {
@@ -61,11 +62,27 @@ public class TodoDo {
         this.eventMsg = eventMsg;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
     @Override
     public String toString() {
         return "Todo{" +
                 "todoId=" + todoId +
-                ", timeConsumed=" + timeConsumed +
+                ", planConsumed=" + planConsumed +
                 ", todoTime=" + todoTime +
                 ", eventMsg='" + eventMsg + '\'' +
                 ", userId='" + userId + '\'' +

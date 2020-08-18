@@ -10,4 +10,6 @@ public interface TodoMapper {
     List<TodoDo> generateSchedule(String userId);
 
     boolean deleteAll(String userId);
+
+    boolean deleteById(long todoId);
 }
