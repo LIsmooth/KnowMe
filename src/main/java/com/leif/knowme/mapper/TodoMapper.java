@@ -8,9 +8,9 @@ import java.util.List;
 public interface TodoMapper {
     int createTodo(TodoDo todoDo);
 
-    boolean deleteAllByUserId(String userId);
+    int deleteAllByUserId(String userId);
 
-    boolean deleteByTodoId(String todoId);
+    int deleteByTodoId(String todoId);
 
     List<TodoDo> getUserAllTodos(String userId);
 }

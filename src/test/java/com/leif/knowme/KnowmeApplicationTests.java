@@ -3,12 +3,17 @@ package com.leif.knowme;
 import com.leif.knowme.model.TodoDo;
 import com.leif.knowme.mapper.TodoMapper;
 import com.leif.knowme.mapper.UserMapper;
+import com.leif.knowme.po.TodoPo;
+import com.leif.knowme.po.UserPo;
+import com.leif.knowme.service.TodoService;
+import com.leif.knowme.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Date;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -16,21 +21,32 @@ import java.util.List;
 public class KnowmeApplicationTests {
 
     @Autowired
-    UserMapper userMapper;
+    UserService userService;
 
     @Autowired
-    TodoMapper todoMapper;
+    TodoService todoService;
 
     @Test
-    public void getUserById(){
-        System.out.println(userMapper.getUserById("1"));
+    public void processTest() {
+        UserPo userPo = new UserPo("Leif", new Date(), 0);
+        String userId = userService.createUser(userPo);
+        UserPo userPo2 = userService.getUserById(userId);
+        assert userPo2.getName().equals(userPo.getName());
+
+        String eventMsg = "Test20";
+        TodoPo todoPo = new TodoPo(userId, 20, eventMsg, TodoPo.STATUS_CREATE);
+        TodoPo todoPo2 = new TodoPo(userId, 30, "eventMsg", TodoPo.STATUS_CREATE);
+        String todoId = todoService.createTodo(todoPo);
+        todoService.createTodo(todoPo2);
+
+        List<TodoPo> todoPos = todoService.getUserAllTodos(userId, TodoPo.STATUS_CREATE, 0);
+        assert todoPos.size() == 2;
+        assert todoPos.get(0).getEventMsg().equals(eventMsg);
+        assert todoService.deleteByTodoId(todoId) == 1;
+        assert todoService.getUserAllTodos(userId, TodoPo.STATUS_CREATE, 0).size() == 1;
+        assert todoService.deleteAllByUserId(userId) == 1;
+        assert todoService.getUserAllTodos(userId, TodoPo.STATUS_CREATE, 0).size() == 0;
     }
 
-    @Test
-    public void generateSchedule(){
-        List<TodoDo> todoDos =todoMapper.generateSchedule("1");
-        assert todoDos !=null;
-        todoDos.forEach(t-> System.out.println(t.toString()));
-    }
 
 }

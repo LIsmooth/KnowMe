@@ -3,11 +3,11 @@ package com.leif.knowme.repository;
 import com.leif.knowme.mapper.TodoMapper;
 import com.leif.knowme.model.TodoDo;
 import com.leif.knowme.po.TodoPo;
+import com.leif.knowme.util.UUIDUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,9 +16,11 @@ public class TodoRepository {
     @Autowired
     private TodoMapper todoMapper;
 
-    public int createTodo(TodoPo todoPo) {
+    public String createTodo(TodoPo todoPo) {
         TodoDo todoDo = getTodoDo(todoPo);
-        return todoMapper.createTodo(todoDo);
+        todoDo.setTodoId(UUIDUtils.generateUUID());
+        todoMapper.createTodo(todoDo);
+        return todoDo.getTodoId();
     }
 
     private TodoDo getTodoDo(TodoPo todoPo) {
@@ -27,11 +29,11 @@ public class TodoRepository {
         return todoDo;
     }
 
-    public boolean deleteAllByUserId(String userId) {
+    public int deleteAllByUserId(String userId) {
         return todoMapper.deleteAllByUserId(userId);
     }
 
-    public boolean deleteByTodoId(String todoId) {
+    public int deleteByTodoId(String todoId) {
         return todoMapper.deleteByTodoId(todoId);
     }
 

@@ -1,12 +1,27 @@
 package com.leif.knowme.po;
 
 public class TodoPo {
+
+    public static final int STATUS_CREATE = 0;
+    public static final int STATUS_QUOTED = 20;
+    public static final int STATUS_COMPLETE = 30;
+
     String todoId;
     String userId;
     Integer planConsumed;
     Integer realConsumed;
     String eventMsg;
     int status;
+
+    public TodoPo() {
+    }
+
+    public TodoPo(String userId, Integer planConsumed, String eventMsg, int status) {
+        this.userId = userId;
+        this.planConsumed = planConsumed;
+        this.eventMsg = eventMsg;
+        this.status = status;
+    }
 
     public String getTodoId() {
         return todoId;

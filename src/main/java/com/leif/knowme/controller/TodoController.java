@@ -15,23 +15,23 @@ public class TodoController {
     TodoService todoService;
 
     @PostMapping(headers = "Accept=application/json")
-    public int createTodo(@RequestBody TodoPo todoPo) {
+    public String createTodo(@RequestBody TodoPo todoPo) {
         return todoService.createTodo(todoPo);
     }
 
     @DeleteMapping("/{todoId}")
-    public boolean deleteByTodoId(@PathVariable String todoId) {
+    public int deleteByTodoId(@PathVariable String todoId) {
         return todoService.deleteByTodoId(todoId);
     }
 
     @DeleteMapping("/user/{userId}")
-    public boolean deleteAllByUserId(@PathVariable String userId) {
+    public int deleteAllByUserId(@PathVariable String userId) {
         return todoService.deleteAllByUserId(userId);
     }
 
     @PutMapping
-    public boolean updateTodo(@RequestBody TodoPo todoPo) {
-        return false;//TODO updateTodo
+    public int updateTodo(@RequestBody TodoPo todoPo) {
+        return 0;//TODO updateTodo
     }
 
     @GetMapping("/user/{userId}/status/{status}/{pageNo}")

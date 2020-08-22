@@ -1,30 +1,20 @@
-package com.leif.knowme.model;
+package com.leif.knowme.po;
 
 import java.util.Date;
 
-public class UserDo {
+public class UserPo {
     private String userId;
     private String name;
     private Date birthday;
-    private Byte gender;
+    private Integer gender;
 
-
-    public UserDo(){
-        super();
+    public UserPo() {
     }
-    public UserDo(String userId, String name, Date birthday) {
-        this.userId = userId;
+
+    public UserPo(String name, Date birthday, Integer gender) {
         this.name = name;
         this.birthday = birthday;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId='" + userId + '\'' +
-                ", name='" + name + '\'' +
-                ", birthday=" + birthday +
-                '}';
+        this.gender = gender;
     }
 
     public String getUserId() {
@@ -51,11 +41,11 @@ public class UserDo {
         this.birthday = birthday;
     }
 
-    public Byte getGender() {
+    public Integer getGender() {
         return gender;
     }
 
-    public void setGender(Byte gender) {
+    public void setGender(Integer gender) {
         this.gender = gender;
     }
 }

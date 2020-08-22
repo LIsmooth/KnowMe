@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class TodoDo {
 
-    private Long todoId;
+    private String todoId;
     private String userId;
     private Integer type;
     private Integer planConsumed;
@@ -14,11 +14,11 @@ public class TodoDo {
     private Integer status;
     private Date created;
 
-    public Long getTodoId() {
+    public String getTodoId() {
         return todoId;
     }
 
-    public void setTodoId(Long todoId) {
+    public void setTodoId(String todoId) {
         this.todoId = todoId;
     }
 

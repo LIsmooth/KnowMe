@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.leif.knowme.mapper.TodoMapper">
 
-    <insert id="createTodo" parameterType="TodoDo" keyProperty="todoId" useGeneratedKeys="true">
+    <insert id="createTodo" parameterType="TodoDo">
         insert into t_todo(todo_id, user_id, plan_consumed, real_consumed, event_msg, status)
         values (#{todoId},#{userId}, #{planConsumed}, #{realConsumed}, #{eventMsg},#{status})
     </insert>

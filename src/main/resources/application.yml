@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: proc
+    active: pro
   jackson:
     time-zone: GMT+8
 mybatis:

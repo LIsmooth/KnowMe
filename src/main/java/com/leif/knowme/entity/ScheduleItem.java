@@ -7,7 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class ScheduleItem {
-    long todoId;
+    String todoId;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date beginTime;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
@@ -65,11 +65,11 @@ public class ScheduleItem {
         this.planConsumed = planConsumed;
     }
 
-    public long getTodoId() {
+    public String getTodoId() {
         return todoId;
     }
 
-    public void setTodoId(long todoId) {
+    public void setTodoId(String todoId) {
         this.todoId = todoId;
     }
 }

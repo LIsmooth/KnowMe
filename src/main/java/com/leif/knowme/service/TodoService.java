@@ -11,34 +11,23 @@ import java.util.List;
 @Service
 public class TodoService {
 
-@Autowired
-private TodoRepository todoRepo;
     @Autowired
-    private ScheduleFactory scheduleFactory;
+    private TodoRepository todoRepo;
 
-    public int createTodo(TodoPo todoPo) {
+    public String createTodo(TodoPo todoPo) {
         return todoRepo.createTodo(todoPo);
     }
 
-    public boolean deleteAllByUserId(String userId) {
+    public int deleteAllByUserId(String userId) {
         return todoRepo.deleteAllByUserId(userId);
     }
 
-    public boolean deleteByTodoId(String todoId){
+    public int deleteByTodoId(String todoId) {
         return todoRepo.deleteByTodoId(todoId);
     }
 
     public List<TodoPo> getUserAllTodos(String userId, int status, int pageNo) {
         return todoRepo.getUserAllTodos(userId);
     }
-
-/*    public Schedule generateSchedule(String userId, Date beginTime) throws AppException {
-        List<TodoDo> todoDos = todoMapper.generateSchedule(userId);
-        return scheduleFactory.buildFromTodos(beginTime, todoDos);
-    }
-
-    public String showSchedule(String userId, Date beginTime) throws AppException {
-        return generateSchedule(userId,beginTime).toString();
-    }*/
 
 }
