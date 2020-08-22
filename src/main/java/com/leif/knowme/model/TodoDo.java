@@ -6,12 +6,12 @@ import java.util.Date;
 public class TodoDo {
 
     private Long todoId;
+    private String userId;
+    private Integer type;
     private Integer planConsumed;
     private Integer realConsumed;
-    private Integer type;
-    private Date todoTime;
     private String eventMsg;
-    private String userId;
+    private Integer status;
     private Date created;
 
     public Long getTodoId() {
@@ -20,6 +20,22 @@ public class TodoDo {
 
     public void setTodoId(Long todoId) {
         this.todoId = todoId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public Integer getPlanConsumed() {
@@ -38,22 +54,6 @@ public class TodoDo {
         this.realConsumed = realConsumed;
     }
 
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
-    }
-
-    public Date getTodoTime() {
-        return todoTime;
-    }
-
-    public void setTodoTime(Date todoTime) {
-        this.todoTime = todoTime;
-    }
-
     public String getEventMsg() {
         return eventMsg;
     }
@@ -62,12 +62,12 @@ public class TodoDo {
         this.eventMsg = eventMsg;
     }
 
-    public String getUserId() {
-        return userId;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public Date getCreated() {
@@ -80,12 +80,14 @@ public class TodoDo {
 
     @Override
     public String toString() {
-        return "Todo{" +
+        return "TodoDo{" +
                 "todoId=" + todoId +
-                ", planConsumed=" + planConsumed +
-                ", todoTime=" + todoTime +
-                ", eventMsg='" + eventMsg + '\'' +
                 ", userId='" + userId + '\'' +
+                ", type=" + type +
+                ", planConsumed=" + planConsumed +
+                ", realConsumed=" + realConsumed +
+                ", eventMsg='" + eventMsg + '\'' +
+                ", status=" + status +
                 ", created=" + created +
                 '}';
     }

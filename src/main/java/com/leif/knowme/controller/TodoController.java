@@ -1,44 +1,45 @@
 package com.leif.knowme.controller;
 
-import com.leif.knowme.entity.Schedule;
-import com.leif.knowme.exception.AppException;
-import com.leif.knowme.model.TodoDo;
+import com.leif.knowme.po.TodoPo;
 import com.leif.knowme.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
+import java.util.List;
 
 @RestController
-@RequestMapping(value = "/todo")
+@RequestMapping(value = "/todos")
 public class TodoController {
-
 
     @Autowired
     TodoService todoService;
 
-    @PutMapping(value = "/create" ,headers = "Accept=application/json")
-    public int createTodo(@RequestBody TodoDo todoDo) {
-        return todoService.createTodo(todoDo);
+    @PostMapping(headers = "Accept=application/json")
+    public int createTodo(@RequestBody TodoPo todoPo) {
+        return todoService.createTodo(todoPo);
     }
 
-    @DeleteMapping(value = "/delete/userid/{userId}")
-    public boolean deleteAll(@PathVariable String userId) {
-        return todoService.deleteAll(userId);
+    @DeleteMapping("/{todoId}")
+    public boolean deleteByTodoId(@PathVariable String todoId) {
+        return todoService.deleteByTodoId(todoId);
     }
 
-    @DeleteMapping(value="/delete/todoid/{todoId}")
-    public boolean deleteByTodoId(@PathVariable long todoId){
-        return todoService.deleteById(todoId);
+    @DeleteMapping("/user/{userId}")
+    public boolean deleteAllByUserId(@PathVariable String userId) {
+        return todoService.deleteAllByUserId(userId);
     }
 
-    @GetMapping(value = "/show/{userId}/{beginTime}")
-    public Schedule generateTodos(@PathVariable String userId,
-                                  @PathVariable @DateTimeFormat(pattern = "yyyyMMddHHmm") Date beginTime)
-            throws AppException {
-        return todoService.generateSchedule(userId, beginTime);
+    @PutMapping
+    public boolean updateTodo(@RequestBody TodoPo todoPo) {
+        return false;//TODO updateTodo
     }
+
+    @GetMapping("/user/{userId}/status/{status}/{pageNo}")
+    public List<TodoPo> getUserAllTodos(@PathVariable String userId, @PathVariable int status, @PathVariable int pageNo) {
+        return todoService.getUserAllTodos(userId,status,pageNo);
+    }
+
+/*
 
     @GetMapping(value = "/showschedule/{userId}/{beginTime}")
     public String showSchedule(@PathVariable String userId,
@@ -46,5 +47,6 @@ public class TodoController {
             throws AppException {
         return todoService.showSchedule(userId, beginTime);
     }
+*/
 
 }
