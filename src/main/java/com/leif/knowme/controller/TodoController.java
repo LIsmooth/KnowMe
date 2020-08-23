@@ -35,8 +35,9 @@ public class TodoController {
     }
 
     @GetMapping("/user/{userId}/status/{status}/{pageNo}")
-    public List<TodoPo> getUserAllTodos(@PathVariable String userId, @PathVariable int status, @PathVariable int pageNo) {
-        return todoService.getUserAllTodos(userId,status,pageNo);
+    public List<TodoPo> getUserAllTodos(@PathVariable String userId, @PathVariable String status,
+                                        @PathVariable int pageNo) {
+        return todoService.getUserAllTodos(userId, status.split("-"), pageNo);
     }
 
 /*

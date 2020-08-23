@@ -2,12 +2,13 @@ package com.leif.knowme.po;
 
 public class TodoPo {
 
+    public static final int STATUS_DELETED = -10;
     public static final int STATUS_CREATE = 0;
     public static final int STATUS_QUOTED = 20;
-    public static final int STATUS_COMPLETE = 30;
+    public static final int STATUS_COMPLETE = 50;
 
     String todoId;
-    String userId;
+    String accountId;
     Integer planConsumed;
     Integer realConsumed;
     String eventMsg;
@@ -16,8 +17,8 @@ public class TodoPo {
     public TodoPo() {
     }
 
-    public TodoPo(String userId, Integer planConsumed, String eventMsg, int status) {
-        this.userId = userId;
+    public TodoPo(String accountId, Integer planConsumed, String eventMsg, int status) {
+        this.accountId = accountId;
         this.planConsumed = planConsumed;
         this.eventMsg = eventMsg;
         this.status = status;
@@ -63,11 +64,11 @@ public class TodoPo {
         this.status = status;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getAccountId() {
+        return accountId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
     }
 }

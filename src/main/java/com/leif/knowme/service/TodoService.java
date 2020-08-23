@@ -1,6 +1,5 @@
 package com.leif.knowme.service;
 
-import com.leif.knowme.factory.ScheduleFactory;
 import com.leif.knowme.po.TodoPo;
 import com.leif.knowme.repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +25,8 @@ public class TodoService {
         return todoRepo.deleteByTodoId(todoId);
     }
 
-    public List<TodoPo> getUserAllTodos(String userId, int status, int pageNo) {
-        return todoRepo.getUserAllTodos(userId);
+    public List<TodoPo> getUserAllTodos(String userId, String[] status, int pageNo) {
+        return todoRepo.getUserAllTodos(userId,status);
     }
 
 }

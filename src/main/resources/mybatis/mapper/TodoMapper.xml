@@ -3,30 +3,58 @@
 <mapper namespace="com.leif.knowme.mapper.TodoMapper">
 
     <insert id="createTodo" parameterType="TodoDo">
-        insert into t_todo(todo_id, user_id, plan_consumed, real_consumed, event_msg, status)
-        values (#{todoId},#{userId}, #{planConsumed}, #{realConsumed}, #{eventMsg},#{status})
+        insert into t_todo(todo_id, account_id, plan_consumed, real_consumed, event_msg, status)
+        values (#{todoId}, #{accountId}, #{planConsumed}, #{realConsumed}, #{eventMsg}, #{status})
     </insert>
 
 
-    <delete id="deleteAllByUserId" parameterType="String">
-        delete from t_todo where user_id=#{userId}
-    </delete>
-    <delete id="deleteByTodoId">
-        delete
-        from t_todo
+    <update id="deleteAllByUserId" parameterType="TodoDo">
+        update t_todo
+        set status=#{status}
+        where account_id = #{accountId}
+    </update>
+    <update id="deleteByTodoId">
+        update t_todo
+        set status=#{status}
         where todo_id = #{todoId}
-    </delete>
+    </update>
 
-    <select id="getUserAllTodos" resultType="TodoDo">
+    <select id="getTodos" resultType="TodoDo">
         select *
         from t_todo
-        where user_id = #{0}
+        <where>
+            <if test="todo.todoId!=null">
+                todoId=#{todo.todoId}
+            </if>
+            <if test="todo.userId!=null">
+                and user_id=#{todo.userId}
+            </if>
+            <if test="todo.type!= null">
+                and type=#{todo.type}
+            </if>
+            <if test="status!=null">
+                and status in
+                <foreach collection="status" open="(" separator="," close=")" item="item">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        order by created
     </select>
 
     <select id="generateSchedule" resultType="TodoDo">
-        select * from t_todo where user_id=#{userId} order by created;
+        select *
+        from t_todo
+        where account_id = #{accountId}
+        order by created;
     </select>
 
+    <select id="getTodosByIds" resultType="TodoDo">
+        select * from t_todo where account_id=#{accountId} and todo_id in
+        <foreach collection="todoIds" open="(" separator="," close=")" item="todoId">
+            #{todoId}
+        </foreach>
+    </select>
 
     <update id="updateTodo" parameterType="TodoDo">
         update t_todo
@@ -34,6 +62,5 @@
             plan_consumed = #{planConsumed}
         where todo_id = #{todoId}
     </update>
-
 
 </mapper>

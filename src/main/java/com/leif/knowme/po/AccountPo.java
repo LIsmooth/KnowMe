@@ -1,24 +1,13 @@
-package com.leif.knowme.model;
+package com.leif.knowme.po;
 
-import java.util.Date;
-
-public class AccountDo {
+public class AccountPo {
     private String accountId;
     private String accountNo;
     private String accountName;
     private String password;
     private String userId;
     private Integer status;
-    private Date created;
-
-    public Date getCreated() {
-        return created;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
+    
     public String getAccountId() {
         return accountId;
     }

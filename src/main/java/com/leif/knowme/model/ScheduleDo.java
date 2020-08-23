@@ -1,11 +1,10 @@
-package com.leif.knowme.po;
+package com.leif.knowme.model;
 
 import java.util.Date;
-import java.util.List;
 
-public class SchedulePo {
+public class ScheduleDo {
     private String scheduleId;
-    private String accountId;
+    private String userId;
     private String scheduleName;
     private String scheduleNote;
     private String summaryId;
@@ -15,26 +14,22 @@ public class SchedulePo {
     private Date realStartTime;
     private Date realEndTime;
     private Date created;
-    private List<ScheduleItemPo> scheduleItemPos;
 
-    public SchedulePo() {
-    }
-
-    public SchedulePo(String accountId, String scheduleName, String scheduleNote, Date planStartTime,
-                      Date planEndTime) {
-        this.accountId = accountId;
-        this.scheduleName = scheduleName;
-        this.scheduleNote = scheduleNote;
-        this.planStartTime = planStartTime;
-        this.planEndTime = planEndTime;
-    }
-
-    public List<ScheduleItemPo> getScheduleItemPos() {
-        return scheduleItemPos;
-    }
-
-    public void setScheduleItemPos(List<ScheduleItemPo> scheduleItemPos) {
-        this.scheduleItemPos = scheduleItemPos;
+    @Override
+    public String toString() {
+        return "ScheduleDo{" +
+                "scheduleId='" + scheduleId + '\'' +
+                ", userId='" + userId + '\'' +
+                ", scheduleName='" + scheduleName + '\'' +
+                ", scheduleNote='" + scheduleNote + '\'' +
+                ", summaryId='" + summaryId + '\'' +
+                ", status=" + status +
+                ", planStartTime=" + planStartTime +
+                ", planEndTime=" + planEndTime +
+                ", realStartTime=" + realStartTime +
+                ", realEndTime=" + realEndTime +
+                ", created=" + created +
+                '}';
     }
 
     public String getScheduleNote() {
@@ -53,12 +48,12 @@ public class SchedulePo {
         this.scheduleId = scheduleId;
     }
 
-    public String getAccountId() {
-        return accountId;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setAccountId(String accountId) {
-        this.accountId = accountId;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getScheduleName() {

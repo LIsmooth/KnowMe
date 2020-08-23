@@ -3,8 +3,13 @@ package com.leif.knowme.factory;
 import com.leif.knowme.entity.Schedule;
 import com.leif.knowme.entity.ScheduleItem;
 import com.leif.knowme.exception.AppException;
+import com.leif.knowme.exception.ParamException;
 import com.leif.knowme.model.TodoDo;
+import com.leif.knowme.po.ScheduleItemPo;
+import com.leif.knowme.po.SchedulePo;
+import com.leif.knowme.po.TodoPo;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -14,19 +19,28 @@ import java.util.List;
 @Component
 public class ScheduleFactory {
 
-    public Schedule buildFromTodos(Date beginTime, List<TodoDo> todoDos) throws AppException {
-        if (todoDos == null || todoDos.size() == 0) {
+    public SchedulePo buildFromTodos(Date planStartTime, List<TodoPo> todoPos) throws AppException {
+        if (todoPos == null || todoPos.size() == 0) {
             throw new AppException("No todo");
         }
-        List<ScheduleItem> items=new ArrayList<>(todoDos.size());
-        Calendar calendar=Calendar.getInstance();
-        calendar.setTime(beginTime);
-        for (TodoDo todo : todoDos) {
-            items.add(new ScheduleItem(todo,calendar));
+        List<ScheduleItemPo> items = new ArrayList<>(todoPos.size());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(planStartTime);
+        int orderNo = 1;
+        for (TodoPo todo : todoPos) {
+            items.add(generateScheduleItemPo(todo, calendar, orderNo++));
         }
-        Schedule schedule=new Schedule();
-        schedule.setBeginTime(beginTime);
-        schedule.setScheduleItems(items);
+        SchedulePo schedule = new SchedulePo();
+        schedule.setPlanStartTime(planStartTime);
+        schedule.setPlanEndTime(calendar.getTime());
+        schedule.setScheduleItemPos(items);
         return schedule;
+    }
+
+    private ScheduleItemPo generateScheduleItemPo(TodoPo todo, Calendar calendar, int orderNo) {
+        Date startTime = calendar.getTime();
+        calendar.add(Calendar.MINUTE, todo.getPlanConsumed());
+        Date endTime = calendar.getTime();
+        return new ScheduleItemPo(todo.getTodoId(), startTime, endTime, orderNo);
     }
 }
