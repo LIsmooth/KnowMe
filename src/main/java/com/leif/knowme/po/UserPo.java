@@ -7,6 +7,8 @@ public class UserPo {
     private String name;
     private Date birthday;
     private Integer gender;
+    private String phone;
+    private Date created;
 
     public UserPo() {
     }
@@ -47,5 +49,21 @@ public class UserPo {
 
     public void setGender(Integer gender) {
         this.gender = gender;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
     }
 }

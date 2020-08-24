@@ -5,10 +5,8 @@ import com.leif.knowme.entity.ScheduleItem;
 import com.leif.knowme.model.TodoDo;
 import com.leif.knowme.mapper.TodoMapper;
 import com.leif.knowme.mapper.UserMapper;
-import com.leif.knowme.po.ScheduleItemPo;
-import com.leif.knowme.po.SchedulePo;
-import com.leif.knowme.po.TodoPo;
-import com.leif.knowme.po.UserPo;
+import com.leif.knowme.po.*;
+import com.leif.knowme.service.AccountService;
 import com.leif.knowme.service.ScheduleService;
 import com.leif.knowme.service.TodoService;
 import com.leif.knowme.service.UserService;
@@ -34,6 +32,8 @@ public class KnowmeApplicationTests {
 
     @Autowired
     ScheduleService scheduleService;
+    @Autowired
+    AccountService accountService;
 
     @Test
     public void processTest() {
@@ -44,11 +44,17 @@ public class KnowmeApplicationTests {
         UserPo userPo2 = userService.getUserById(userId);
         assert userPo2.getName().equals(userPo.getName());
 
+        AccountPo accountPo = new AccountPo();
+        accountPo.setAccountName("刘煜迪");
+        accountPo.setAccountNo("HelloLeif");
+        accountPo.setPassword("qwer1234");
+        assert accountService.createAccount(accountPo) != null;
+
         String eventMsg = "Test20";
         TodoPo todoPo = new TodoPo(userId, 20, eventMsg, TodoPo.STATUS_CREATE);
         TodoPo todoPo2 = new TodoPo(userId, 30, "eventMsg", TodoPo.STATUS_CREATE);
         String todoId = todoService.createTodo(todoPo);
-        String todoId2 =todoService.createTodo(todoPo2);
+        String todoId2 = todoService.createTodo(todoPo2);
 
         List<TodoPo> todoPos = todoService.getUserAllTodos(userId, status, 0);
         assert todoPos.size() == 2;

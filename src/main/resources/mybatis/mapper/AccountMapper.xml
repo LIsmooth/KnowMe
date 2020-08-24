@@ -4,8 +4,25 @@
 
     <insert id="createAccount" parameterType="AccountDo">
         insert into t_account (account_id, account_no, account_name, password, user_id)
-            values (#{accountId}, #{accountNo}, #{accountName}, #{password}, #{userId})
+        values (#{accountId}, #{accountNo}, #{accountName}, #{password}, #{userId})
     </insert>
+
+    <select id="queryAccount" resultType="AccountDo">
+        SELECT *
+        from t_account
+        <where>
+            <if test="accountId!=null">
+                account_id = #{accountId}
+            </if>
+            <if test="accountNo!=null">
+                and account_no = #{accountNo}
+            </if>
+            <if test="accountName!=null">
+                and account_name = #{accountName}
+            </if>
+        </where>
+    </select>
+
 
     <resultMap id="AccountMap1" type="com.leif.knowme.model.AccountDo">
         <id column="account_id" property="accountId"/>
@@ -29,11 +46,4 @@
         where account_id = #{accountId}
     </select>
 
-    <select id="getAccountById1" resultMap="AccountMap1">
-        SELECT *
-        from t_account a,
-             t_user u
-        where account_id = #{accountId}
-          and a.user_id = u.user_id
-    </select>
 </mapper>

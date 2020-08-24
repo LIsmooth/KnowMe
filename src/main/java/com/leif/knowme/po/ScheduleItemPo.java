@@ -13,7 +13,8 @@ public class ScheduleItemPo {
     private Date planEndTime;
     private Date realStartTime;
     private Date realEndTime;
-    private int orderNo;
+    private Integer orderNo;
+    private Integer status;
 
     public ScheduleItemPo() {
     }
@@ -81,11 +82,19 @@ public class ScheduleItemPo {
         this.realEndTime = realEndTime;
     }
 
-    public int getOrderNo() {
+    public Integer getOrderNo() {
         return orderNo;
     }
 
-    public void setOrderNo(int orderNo) {
+    public void setOrderNo(Integer orderNo) {
         this.orderNo = orderNo;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

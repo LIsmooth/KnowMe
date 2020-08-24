@@ -7,6 +7,8 @@ public class UserDo {
     private String name;
     private Date birthday;
     private Byte gender;
+    private String phone;
+    private Date created;
 
 
     public UserDo(){
@@ -16,15 +18,6 @@ public class UserDo {
         this.userId = userId;
         this.name = name;
         this.birthday = birthday;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId='" + userId + '\'' +
-                ", name='" + name + '\'' +
-                ", birthday=" + birthday +
-                '}';
     }
 
     public String getUserId() {
@@ -57,5 +50,21 @@ public class UserDo {
 
     public void setGender(Byte gender) {
         this.gender = gender;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
     }
 }
