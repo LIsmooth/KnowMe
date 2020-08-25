@@ -6,7 +6,7 @@ import java.util.Date;
 public class TodoDo {
 
     private String todoId;
-    private String userId;
+    private String accountId;
     private Integer type;
     private Integer planConsumed;
     private Integer realConsumed;
@@ -22,12 +22,12 @@ public class TodoDo {
         this.todoId = todoId;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getAccountId() {
+        return accountId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
     }
 
     public Integer getType() {
@@ -82,7 +82,7 @@ public class TodoDo {
     public String toString() {
         return "TodoDo{" +
                 "todoId=" + todoId +
-                ", userId='" + userId + '\'' +
+                ", userId='" + accountId + '\'' +
                 ", type=" + type +
                 ", planConsumed=" + planConsumed +
                 ", realConsumed=" + realConsumed +

@@ -1,5 +1,7 @@
 package com.leif.knowme.controller;
 
+import com.leif.knowme.base.BaseContext;
+import com.leif.knowme.base.KmRequest;
 import com.leif.knowme.po.TodoPo;
 import com.leif.knowme.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,18 +17,18 @@ public class TodoController {
     TodoService todoService;
 
     @PostMapping(headers = "Accept=application/json")
-    public String createTodo(@RequestBody TodoPo todoPo) {
-        return todoService.createTodo(todoPo);
+    public String createTodo(@RequestBody KmRequest<TodoPo> request) {
+        return todoService.createTodo(request.getData());
     }
 
     @DeleteMapping("/{todoId}")
-    public int deleteByTodoId(@PathVariable String todoId) {
-        return todoService.deleteByTodoId(todoId);
+    public int deleteByTodoId(@RequestBody KmRequest<Object> request,@PathVariable String todoId) {
+        return todoService.deleteByTodoId(new BaseContext(request),todoId);
     }
 
-    @DeleteMapping("/user/{userId}")
-    public int deleteAllByUserId(@PathVariable String userId) {
-        return todoService.deleteAllByUserId(userId);
+    @DeleteMapping("/account/{accountId}")
+    public int deleteAllByAccountId(@RequestBody KmRequest<Object> request,@PathVariable String accountId) {
+        return todoService.deleteAllByAccountId(accountId);
     }
 
     @PutMapping
@@ -34,10 +36,10 @@ public class TodoController {
         return 0;//TODO updateTodo
     }
 
-    @GetMapping("/user/{userId}/status/{status}/{pageNo}")
-    public List<TodoPo> getUserAllTodos(@PathVariable String userId, @PathVariable String status,
-                                        @PathVariable int pageNo) {
-        return todoService.getUserAllTodos(userId, status.split("-"), pageNo);
+    @GetMapping("/account/{accountId}/status/{status}/{pageNo}")
+    public List<TodoPo> getAccountAllTodos(@PathVariable String accountId, @PathVariable String status,
+                                           @PathVariable int pageNo) {
+        return todoService.getAccountAllTodos(accountId, status.split("-"), pageNo);
     }
 
 /*

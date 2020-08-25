@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class ScheduleDo {
     private String scheduleId;
-    private String userId;
+    private String accountId;
     private String scheduleName;
     private String scheduleNote;
     private String summaryId;
@@ -19,7 +19,7 @@ public class ScheduleDo {
     public String toString() {
         return "ScheduleDo{" +
                 "scheduleId='" + scheduleId + '\'' +
-                ", userId='" + userId + '\'' +
+                ", accountId='" + accountId + '\'' +
                 ", scheduleName='" + scheduleName + '\'' +
                 ", scheduleNote='" + scheduleNote + '\'' +
                 ", summaryId='" + summaryId + '\'' +
@@ -48,12 +48,12 @@ public class ScheduleDo {
         this.scheduleId = scheduleId;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getAccountId() {
+        return accountId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
     }
 
     public String getScheduleName() {

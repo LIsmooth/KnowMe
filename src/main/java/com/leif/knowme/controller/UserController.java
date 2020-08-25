@@ -1,5 +1,6 @@
 package com.leif.knowme.controller;
 
+import com.leif.knowme.base.KmRequest;
 import com.leif.knowme.po.UserPo;
 import com.leif.knowme.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ public class UserController {
     UserService userService;
 
     @PostMapping(headers = "Accept=application/json")
-    public String createUser(@RequestBody UserPo userPo) {
-        return userService.createUser(userPo);
+    public String createUser(@RequestBody KmRequest<UserPo> request) {
+        return userService.createUser(request.getData());
     }
 }

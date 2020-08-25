@@ -1,13 +1,12 @@
 package com.leif.knowme.base;
 
-import com.leif.knowme.po.SchedulePo;
-
 public class BaseContext {
     String accountId;
 
+    public BaseContext() {
+    }
 
-
-    public BaseContext(KmRequest<SchedulePo> kmRequest) {
+    public BaseContext(KmRequest<?> kmRequest) {
         this.accountId = kmRequest.getHeader().getAccountId();
     }
 

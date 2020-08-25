@@ -9,11 +9,9 @@ import java.util.List;
 public interface TodoMapper {
     int createTodo(TodoDo todoDo);
 
-    int deleteAllByUserId(TodoDo todoDo);
-
-    int deleteByTodoId(TodoDo todoDo);
+    int updateStatusByTodoIdAccountId(TodoDo todoDo);
 
     List<TodoDo> getTodos(@Param("todo") TodoDo todoDo, String[] status);
 
-    List<TodoDo> getTodosByIds(String userId, List<String> todoIds);
+    List<TodoDo> getTodosByIds(@Param("accountId") String accountId,@Param("todoIds") List<String> todoIds);
 }

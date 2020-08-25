@@ -30,23 +30,24 @@ public class TodoRepository {
         return todoDo;
     }
 
-    public int deleteAllByUserId(String userId) {
+    public int deleteAllByAccountId(String accountId) {
         TodoDo todoDo = new TodoDo();
-        todoDo.setUserId(userId);
+        todoDo.setAccountId(accountId);
         todoDo.setStatus(TodoPo.STATUS_DELETED);
-        return todoMapper.deleteAllByUserId(todoDo);
+        return todoMapper.updateStatusByTodoIdAccountId(todoDo);
     }
 
-    public int deleteByTodoId(String todoId) {
+    public int deleteByTodoId(String accountId, String todoId) {
         TodoDo todoDo = new TodoDo();
         todoDo.setTodoId(todoId);
         todoDo.setStatus(TodoPo.STATUS_DELETED);
-        return todoMapper.deleteByTodoId(todoDo);
+        todoDo.setAccountId(accountId);
+        return todoMapper.updateStatusByTodoIdAccountId(todoDo);
     }
 
-    public List<TodoPo> getUserAllTodos(String userId, String[] status) {
+    public List<TodoPo> getAccountAllTodos(String accountId, String[] status) {
         TodoDo todo = new TodoDo();
-        todo.setUserId(userId);
+        todo.setAccountId(accountId);
         List<TodoDo> todoDos = todoMapper.getTodos(todo, status);
         return convertToTodoPos(todoDos);
     }
@@ -62,8 +63,8 @@ public class TodoRepository {
         }).collect(Collectors.toList());
     }
 
-    public List<TodoPo> getTodosByIds(String userId,List<String> todoIds) {
-        List<TodoDo> todoDos = todoMapper.getTodosByIds(userId, todoIds);
+    public List<TodoPo> getTodosByIds(String accountId,List<String> todoIds) {
+        List<TodoDo> todoDos = todoMapper.getTodosByIds(accountId, todoIds);
         return convertToTodoPos(todoDos);
     }
 }

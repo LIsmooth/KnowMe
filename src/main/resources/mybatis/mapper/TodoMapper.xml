@@ -8,15 +8,13 @@
     </insert>
 
 
-    <update id="deleteAllByUserId" parameterType="TodoDo">
+    <update id="updateStatusByTodoIdAccountId">
         update t_todo
         set status=#{status}
         where account_id = #{accountId}
-    </update>
-    <update id="deleteByTodoId">
-        update t_todo
-        set status=#{status}
-        where todo_id = #{todoId}
+        <if test="todoId!=null">
+            and todo_id = #{todoId}
+        </if>
     </update>
 
     <select id="getTodos" resultType="TodoDo">
@@ -26,8 +24,8 @@
             <if test="todo.todoId!=null">
                 todoId=#{todo.todoId}
             </if>
-            <if test="todo.userId!=null">
-                and user_id=#{todo.userId}
+            <if test="todo.accountId!=null">
+                and account_id=#{todo.accountId}
             </if>
             <if test="todo.type!= null">
                 and type=#{todo.type}

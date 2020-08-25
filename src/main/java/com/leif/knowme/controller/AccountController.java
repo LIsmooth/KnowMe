@@ -22,7 +22,7 @@ public class AccountController {
         return accountService.createAccount(request.getData());
     }
 
-    @GetMapping(value = "/{accoundNo}")
+    @GetMapping(value = "/{accountNo}")
     public boolean checkIsAccountNoExist(@PathVariable String accountNo) {
         return accountService.checkIsAccountNoExist(accountNo);
     }
