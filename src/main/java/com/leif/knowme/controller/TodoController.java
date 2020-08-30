@@ -7,7 +7,9 @@ import com.leif.knowme.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/todos")
@@ -22,12 +24,12 @@ public class TodoController {
     }
 
     @DeleteMapping("/{todoId}")
-    public int deleteByTodoId(@RequestBody KmRequest<Object> request,@PathVariable String todoId) {
-        return todoService.deleteByTodoId(new BaseContext(request),todoId);
+    public int deleteByTodoId(@RequestBody KmRequest<Object> request, @PathVariable String todoId) {
+        return todoService.deleteByTodoId(new BaseContext(request), todoId);
     }
 
     @DeleteMapping("/account/{accountId}")
-    public int deleteAllByAccountId(@RequestBody KmRequest<Object> request,@PathVariable String accountId) {
+    public int deleteAllByAccountId(@RequestBody KmRequest<Object> request, @PathVariable String accountId) {
         return todoService.deleteAllByAccountId(accountId);
     }
 
@@ -39,7 +41,11 @@ public class TodoController {
     @GetMapping("/account/{accountId}/status/{status}/{pageNo}")
     public List<TodoPo> getAccountAllTodos(@PathVariable String accountId, @PathVariable String status,
                                            @PathVariable int pageNo) {
-        return todoService.getAccountAllTodos(accountId, status.split("-"), pageNo);
+        return todoService
+                .getAccountAllTodos(accountId,
+                        Arrays.stream(status.split("-")).mapToInt(Integer::valueOf).boxed().collect(
+                                Collectors.toList()),
+                        pageNo);
     }
 
 /*

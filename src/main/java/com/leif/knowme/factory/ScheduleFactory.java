@@ -1,15 +1,11 @@
 package com.leif.knowme.factory;
 
-import com.leif.knowme.entity.Schedule;
-import com.leif.knowme.entity.ScheduleItem;
+
 import com.leif.knowme.exception.AppException;
-import com.leif.knowme.exception.ParamException;
-import com.leif.knowme.model.TodoDo;
 import com.leif.knowme.po.ScheduleItemPo;
 import com.leif.knowme.po.SchedulePo;
 import com.leif.knowme.po.TodoPo;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;

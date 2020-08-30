@@ -26,7 +26,7 @@ public class TodoService {
         return todoRepo.deleteByTodoId(baseContext.getAccountId(),todoId);
     }
 
-    public List<TodoPo> getAccountAllTodos(String accountId, String[] status, int pageNo) {
+    public List<TodoPo> getAccountAllTodos(String accountId, List<Integer> status, int pageNo) {
         return todoRepo.getAccountAllTodos(accountId,status);
     }
 

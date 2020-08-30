@@ -18,10 +18,6 @@ public class AccountService {
         return accountRepo.createAccount(accountPo);
     }
 
-    public AccountPo queryAccount(AccountPo accountPo) {
-        return accountRepo.queryAccount(accountPo);
-    }
-
     public boolean checkIsAccountNoExist(String accountNo) {
         return accountRepo.checkIsAccountNoExist(accountNo);
     }

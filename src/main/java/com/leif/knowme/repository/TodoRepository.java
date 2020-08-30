@@ -1,7 +1,8 @@
 package com.leif.knowme.repository;
 
-import com.leif.knowme.mapper.TodoMapper;
-import com.leif.knowme.model.TodoDo;
+import com.leif.knowme.dao.TodoMapper;
+import com.leif.knowme.entity.Todo;
+import com.leif.knowme.entity.TodoExample;
 import com.leif.knowme.po.TodoPo;
 import com.leif.knowme.util.UUIDUtils;
 import org.springframework.beans.BeanUtils;
@@ -18,53 +19,61 @@ public class TodoRepository {
     private TodoMapper todoMapper;
 
     public String createTodo(TodoPo todoPo) {
-        TodoDo todoDo = getTodoDo(todoPo);
-        todoDo.setTodoId(UUIDUtils.generateUUID());
-        todoMapper.createTodo(todoDo);
-        return todoDo.getTodoId();
+        Todo todo = getTodo(todoPo);
+        todo.setTodoId(UUIDUtils.generateUUID());
+        todoMapper.insertSelective(todo);
+        return todo.getTodoId();
     }
 
-    private TodoDo getTodoDo(TodoPo todoPo) {
-        TodoDo todoDo = new TodoDo();
-        BeanUtils.copyProperties(todoPo, todoDo);
-        return todoDo;
+    private Todo getTodo(TodoPo todoPo) {
+        Todo todo = new Todo();
+        BeanUtils.copyProperties(todoPo, todo);
+        return todo;
     }
 
     public int deleteAllByAccountId(String accountId) {
-        TodoDo todoDo = new TodoDo();
-        todoDo.setAccountId(accountId);
-        todoDo.setStatus(TodoPo.STATUS_DELETED);
-        return todoMapper.updateStatusByTodoIdAccountId(todoDo);
+        Todo todo = new Todo();
+        todo.setStatus(TodoPo.STATUS_DELETED);
+
+        TodoExample example = new TodoExample();
+        example.createCriteria().andAccountIdEqualTo(accountId);
+        return todoMapper.updateByExampleSelective(todo, example);
     }
 
     public int deleteByTodoId(String accountId, String todoId) {
-        TodoDo todoDo = new TodoDo();
-        todoDo.setTodoId(todoId);
-        todoDo.setStatus(TodoPo.STATUS_DELETED);
-        todoDo.setAccountId(accountId);
-        return todoMapper.updateStatusByTodoIdAccountId(todoDo);
+        Todo todo = new Todo();
+        todo.setTodoId(todoId);
+        todo.setStatus(TodoPo.STATUS_DELETED);
+
+        TodoExample example = new TodoExample();
+        example.createCriteria().andAccountIdEqualTo(accountId).andTodoIdEqualTo(todoId);
+        return todoMapper.updateByExampleSelective(todo, example);
     }
 
-    public List<TodoPo> getAccountAllTodos(String accountId, String[] status) {
-        TodoDo todo = new TodoDo();
-        todo.setAccountId(accountId);
-        List<TodoDo> todoDos = todoMapper.getTodos(todo, status);
-        return convertToTodoPos(todoDos);
+    public List<TodoPo> getAccountAllTodos(String accountId, List<Integer> status) {
+        TodoExample example = new TodoExample();
+        example.createCriteria().andAccountIdEqualTo(accountId).andStatusIn(status);
+        example.setOrderByClause("created");
+        List<Todo> todos = todoMapper.selectByExample(example);
+        return convertToTodoPos(todos);
     }
 
-    private List<TodoPo> convertToTodoPos(List<TodoDo> todoDos) {
-        if (CollectionUtils.isEmpty(todoDos)) {
+    private List<TodoPo> convertToTodoPos(List<Todo> todos) {
+        if (CollectionUtils.isEmpty(todos)) {
             return null;
         }
-        return todoDos.stream().map(todoDo -> {
+        return todos.stream().map(todo -> {
             TodoPo todoPo = new TodoPo();
-            BeanUtils.copyProperties(todoDo, todoPo);
+            BeanUtils.copyProperties(todo, todoPo);
             return todoPo;
         }).collect(Collectors.toList());
     }
 
-    public List<TodoPo> getTodosByIds(String accountId,List<String> todoIds) {
-        List<TodoDo> todoDos = todoMapper.getTodosByIds(accountId, todoIds);
-        return convertToTodoPos(todoDos);
+    public List<TodoPo> getTodosByIds(String accountId, List<String> todoIds) {
+        TodoExample example = new TodoExample();
+        example.createCriteria().andAccountIdEqualTo(accountId).andTodoIdIn(todoIds);
+        example.setOrderByClause("created");
+        List<Todo> todos = todoMapper.selectByExample(example);
+        return convertToTodoPos(todos);
     }
 }

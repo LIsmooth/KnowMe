@@ -1,8 +1,6 @@
 package com.leif.knowme.po;
 
-import com.leif.knowme.model.TodoDo;
 
-import java.util.Calendar;
 import java.util.Date;
 
 public class ScheduleItemPo {

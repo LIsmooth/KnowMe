@@ -3,7 +3,6 @@ package com.leif.knowme.controller;
 import com.leif.knowme.base.KmRequest;
 import com.leif.knowme.po.AccountPo;
 import com.leif.knowme.service.AccountService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

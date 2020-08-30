@@ -1,8 +1,9 @@
 package com.leif.knowme.repository;
 
-import com.leif.knowme.mapper.ScheduleMapper;
-import com.leif.knowme.model.ScheduleDo;
-import com.leif.knowme.model.ScheduleItemDo;
+import com.leif.knowme.dao.ScheduleItemMapper;
+import com.leif.knowme.dao.ScheduleMapper;
+import com.leif.knowme.entity.Schedule;
+import com.leif.knowme.entity.ScheduleItem;
 import com.leif.knowme.po.SchedulePo;
 import com.leif.knowme.util.UUIDUtils;
 import org.springframework.beans.BeanUtils;
@@ -16,25 +17,27 @@ import java.util.stream.Collectors;
 public class ScheduleRepository {
     @Autowired
     ScheduleMapper scheduleMapper;
+    @Autowired
+    ScheduleItemMapper scheduleItemMapper;
 
     public int saveSchedule(SchedulePo schedulePo) {
-        ScheduleDo scheduleDo = extractScheduleDo(schedulePo);
-        scheduleDo.setScheduleId(UUIDUtils.generateUUID());
-        List<ScheduleItemDo> scheduleItemDos = extractScheduleItemDos(schedulePo);
-        scheduleMapper.createSchedule(scheduleDo);
-        return scheduleMapper.saveScheduleItems(scheduleItemDos);
+        Schedule schedule = extractSchedule(schedulePo);
+        schedule.setScheduleId(UUIDUtils.generateUUID());
+        List<ScheduleItem> scheduleItemDos = extractScheduleItems(schedulePo);
+        scheduleMapper.insertSelective(schedule);
+        return scheduleItemMapper.insertItems(scheduleItemDos);
     }
 
-    private List<ScheduleItemDo> extractScheduleItemDos(SchedulePo schedulePo) {
+    private List<ScheduleItem> extractScheduleItems(SchedulePo schedulePo) {
         return schedulePo.getScheduleItemPos().stream().map(item -> {
-            ScheduleItemDo itemDo = new ScheduleItemDo();
-            BeanUtils.copyProperties(item, itemDo);
-            return itemDo;
+            ScheduleItem scheduleItem = new ScheduleItem();
+            BeanUtils.copyProperties(item, scheduleItem);
+            return scheduleItem;
         }).collect(Collectors.toList());
     }
 
-    private ScheduleDo extractScheduleDo(SchedulePo schedulePo) {
-        ScheduleDo scheduleDo = new ScheduleDo();
+    private Schedule extractSchedule(SchedulePo schedulePo) {
+        Schedule scheduleDo = new Schedule();
         BeanUtils.copyProperties(schedulePo, scheduleDo);
         return scheduleDo;
     }
