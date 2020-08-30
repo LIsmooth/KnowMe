@@ -3,8 +3,8 @@ package com.leif.knowme.service;
 import com.leif.knowme.base.BaseContext;
 import com.leif.knowme.exception.AppException;
 import com.leif.knowme.factory.ScheduleFactory;
-import com.leif.knowme.po.SchedulePo;
-import com.leif.knowme.po.TodoPo;
+import com.leif.knowme.dto.ScheduleDto;
+import com.leif.knowme.dto.TodoDto;
 import com.leif.knowme.repository.ScheduleRepository;
 import com.leif.knowme.repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +25,13 @@ public class ScheduleService {
     ScheduleFactory scheduleFactory;
 
     @Transactional(rollbackFor = Exception.class)
-    public int createSchedule(SchedulePo schedulePo) {
-        return scheduleRepo.saveSchedule(schedulePo);
+    public int createSchedule(ScheduleDto scheduleDto) {
+        return scheduleRepo.saveSchedule(scheduleDto);
     }
 
-    public SchedulePo previewSchedule(BaseContext context, Date planStartTime, List<String> todoIds) throws
+    public ScheduleDto previewSchedule(BaseContext context, Date planStartTime, List<String> todoIds) throws
             AppException {
-        List<TodoPo> todoPos = todoRepo.getTodosByIds(context.getAccountId(), todoIds);
-        return scheduleFactory.buildFromTodos(planStartTime, todoPos);
+        List<TodoDto> todoDtos = todoRepo.getTodosByIds(context.getAccountId(), todoIds);
+        return scheduleFactory.buildFromTodos(planStartTime, todoDtos);
     }
 }

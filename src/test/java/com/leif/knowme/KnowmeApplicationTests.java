@@ -1,29 +1,26 @@
 package com.leif.knowme;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.leif.knowme.base.BaseContext;
 import com.leif.knowme.exception.AppException;
-import com.leif.knowme.po.AccountPo;
-import com.leif.knowme.po.SchedulePo;
-import com.leif.knowme.po.TodoPo;
-import com.leif.knowme.po.UserPo;
+import com.leif.knowme.dto.AccountDto;
+import com.leif.knowme.dto.ScheduleDto;
+import com.leif.knowme.dto.TodoDto;
+import com.leif.knowme.dto.UserDto;
 import com.leif.knowme.service.AccountService;
 import com.leif.knowme.service.ScheduleService;
 import com.leif.knowme.service.TodoService;
 import com.leif.knowme.service.UserService;
-import org.apache.ibatis.session.SqlSession;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mybatis.generator.api.MyBatisGenerator;
-import org.mybatis.generator.config.Configuration;
-import org.mybatis.generator.config.xml.ConfigurationParser;
-import org.mybatis.generator.internal.DefaultShellCallback;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.File;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -46,42 +43,51 @@ public class KnowmeApplicationTests {
     @Before
     public void deleteTables()
     {
-        jdbcTemplate.execute("delete from t_account");
+        String [] deletes={
+                "DELETE FROM t_user",
+                "DELETE FROM t_todo",
+                "DELETE FROM t_account",
+                "DELETE FROM t_schedule",
+                "DELETE FROM t_schedule_item"
+        };
+        Arrays.stream(deletes).forEach(s -> jdbcTemplate.execute(s));
     }
 
     @Test
-    public void processTest() throws InterruptedException, AppException {
-        List<Integer> status = Collections.singletonList(TodoPo.STATUS_CREATE);
+    public void processTest() throws InterruptedException, AppException, JsonProcessingException {
+        List<Integer> status = Collections.singletonList(TodoDto.STATUS_CREATE);
 
-        UserPo userPo = new UserPo("Leif", new Date(), 0);
-        String userId = userService.createUser(userPo);
-        UserPo userPo2 = userService.getUserById(userId);
-        assert userPo2.getName().equals(userPo.getName());
+        UserDto userDto = new UserDto("Leif", new Date(), 0);
+        String userId = userService.createUser(userDto);
+        UserDto userDto2 = userService.getUserById(userId);
+        assert userDto2.getName().equals(userDto.getName());
 
         String accountNo = "HelloLeif";
-        AccountPo accountPo = new AccountPo();
-        accountPo.setAccountName("刘煜迪");
-        accountPo.setAccountNo(accountNo);
-        accountPo.setPassword("qwer1234");
-        String accountId = accountService.createAccount(accountPo);
+        AccountDto accountDto = new AccountDto();
+        accountDto.setAccountName("刘煜迪");
+        accountDto.setAccountNo(accountNo);
+        accountDto.setPassword("qwer1234");
+        String accountId = accountService.createAccount(accountDto);
         assert accountService.checkIsAccountNoExist(accountNo);
 
         String eventMsg = "Test20";
-        TodoPo todoPo = new TodoPo(accountId, 20, eventMsg, TodoPo.STATUS_CREATE);
-        TodoPo todoPo2 = new TodoPo(accountId, 30, "eventMsg", TodoPo.STATUS_CREATE);
-        String todoId = todoService.createTodo(todoPo);
+        TodoDto todoDto = new TodoDto(accountId, 20, eventMsg, TodoDto.STATUS_CREATE);
+        TodoDto todoDto2 = new TodoDto(accountId, 30, "eventMsg", TodoDto.STATUS_CREATE);
+        String todoId = todoService.createTodo(todoDto);
         Thread.sleep(1000);
-        String todoId2 = todoService.createTodo(todoPo2);
+        String todoId2 = todoService.createTodo(todoDto2);
 
-        List<TodoPo> todoPos = todoService.getAccountAllTodos(accountId, status, 0);
-        assert todoPos.size() == 2;
-        assert todoPos.get(0).getEventMsg().equals(eventMsg);
+        List<TodoDto> todoDtos = todoService.getAccountAllTodos(accountId, status, 0);
+        assert todoDtos.size() == 2;
+        assert todoDtos.get(0).getEventMsg().equals(eventMsg);
 
         BaseContext context = new BaseContext();
         context.setAccountId(accountId);
-        SchedulePo schedulePo=scheduleService.previewSchedule(context, new Date(),
-                todoPos.stream().map(TodoPo::getTodoId).collect(Collectors.toList()));
-        System.out.println(schedulePo);
+        ScheduleDto scheduleDto =scheduleService.previewSchedule(context, new Date(),
+                todoDtos.stream().map(TodoDto::getTodoId).collect(Collectors.toList()));
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        String json = ow.writeValueAsString(scheduleDto);
+        System.out.println(json);
 
         context.setAccountId(accountId);
         assert todoService.deleteByTodoId(context, todoId) == 1;

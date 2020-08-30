@@ -1,6 +1,6 @@
-package com.leif.knowme.po;
+package com.leif.knowme.dto;
 
-public class TodoPo {
+public class TodoDto {
 
     public static final int STATUS_DELETED = -10;
     public static final int STATUS_CREATE = 0;
@@ -12,12 +12,12 @@ public class TodoPo {
     Integer planConsumed;
     Integer realConsumed;
     String eventMsg;
-    int status;
+    Integer status;
 
-    public TodoPo() {
+    public TodoDto() {
     }
 
-    public TodoPo(String accountId, Integer planConsumed, String eventMsg, int status) {
+    public TodoDto(String accountId, Integer planConsumed, String eventMsg, int status) {
         this.accountId = accountId;
         this.planConsumed = planConsumed;
         this.eventMsg = eventMsg;
@@ -56,11 +56,11 @@ public class TodoPo {
         this.eventMsg = eventMsg;
     }
 
-    public int getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

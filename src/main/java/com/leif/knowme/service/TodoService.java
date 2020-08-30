@@ -1,7 +1,7 @@
 package com.leif.knowme.service;
 
 import com.leif.knowme.base.BaseContext;
-import com.leif.knowme.po.TodoPo;
+import com.leif.knowme.dto.TodoDto;
 import com.leif.knowme.repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,8 +14,8 @@ public class TodoService {
     @Autowired
     private TodoRepository todoRepo;
 
-    public String createTodo(TodoPo todoPo) {
-        return todoRepo.createTodo(todoPo);
+    public String createTodo(TodoDto todoDto) {
+        return todoRepo.createTodo(todoDto);
     }
 
     public int deleteAllByAccountId(String accountId) {
@@ -26,7 +26,7 @@ public class TodoService {
         return todoRepo.deleteByTodoId(baseContext.getAccountId(),todoId);
     }
 
-    public List<TodoPo> getAccountAllTodos(String accountId, List<Integer> status, int pageNo) {
+    public List<TodoDto> getAccountAllTodos(String accountId, List<Integer> status, int pageNo) {
         return todoRepo.getAccountAllTodos(accountId,status);
     }
 

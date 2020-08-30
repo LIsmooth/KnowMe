@@ -1,12 +1,12 @@
-package com.leif.knowme.po;
+package com.leif.knowme.dto;
 
 
 import java.util.Date;
 
-public class ScheduleItemPo {
+public class ScheduleItemDto {
     private Long itemId;
     private String scheduleId;
-    private TodoPo todoPo;
+    private TodoDto todoDto;
     private Date planStartTime;
     private Date planEndTime;
     private Date realStartTime;
@@ -14,11 +14,11 @@ public class ScheduleItemPo {
     private Integer orderNo;
     private Integer status;
 
-    public ScheduleItemPo() {
+    public ScheduleItemDto() {
     }
 
-    public ScheduleItemPo(TodoPo todoPo, Date planStartTime, Date planEndTime, int orderNo) {
-        this.todoPo = todoPo;
+    public ScheduleItemDto(TodoDto todoDto, Date planStartTime, Date planEndTime, int orderNo) {
+        this.todoDto = todoDto;
         this.planStartTime = planStartTime;
         this.planEndTime = planEndTime;
         this.orderNo = orderNo;
@@ -40,12 +40,12 @@ public class ScheduleItemPo {
         this.scheduleId = scheduleId;
     }
 
-    public TodoPo getTodoPo() {
-        return todoPo;
+    public TodoDto getTodoDto() {
+        return todoDto;
     }
 
-    public void setTodoPo(TodoPo todoPo) {
-        this.todoPo = todoPo;
+    public void setTodoDto(TodoDto todoDto) {
+        this.todoDto = todoDto;
     }
 
     public Date getPlanStartTime() {
@@ -98,6 +98,6 @@ public class ScheduleItemPo {
 
     @Override
     public String toString() {
-        return planStartTime + "\t" + todoPo.getEventMsg() + "\t" + planEndTime;
+        return planStartTime + "\t" + todoDto.getEventMsg() + "\t" + planEndTime;
     }
 }

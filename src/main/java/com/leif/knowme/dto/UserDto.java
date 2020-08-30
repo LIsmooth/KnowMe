@@ -1,8 +1,8 @@
-package com.leif.knowme.po;
+package com.leif.knowme.dto;
 
 import java.util.Date;
 
-public class UserPo {
+public class UserDto {
     private String userId;
     private String name;
     private Date birthday;
@@ -10,10 +10,10 @@ public class UserPo {
     private String phone;
     private Date created;
 
-    public UserPo() {
+    public UserDto() {
     }
 
-    public UserPo(String name, Date birthday, Integer gender) {
+    public UserDto(String name, Date birthday, Integer gender) {
         this.name = name;
         this.birthday = birthday;
         this.gender = gender;

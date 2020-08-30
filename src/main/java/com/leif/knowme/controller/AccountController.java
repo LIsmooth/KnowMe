@@ -1,8 +1,10 @@
 package com.leif.knowme.controller;
 
+import com.leif.knowme.api.request.CreateAccountRequest;
 import com.leif.knowme.base.KmRequest;
-import com.leif.knowme.po.AccountPo;
+import com.leif.knowme.dto.AccountDto;
 import com.leif.knowme.service.AccountService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +19,10 @@ public class AccountController {
     AccountService accountService;
 
     @PostMapping(headers = "Accept=application/json")
-    public String createAccount(@RequestBody KmRequest<AccountPo> request) {
-        return accountService.createAccount(request.getData());
+    public String createAccount(@RequestBody KmRequest<CreateAccountRequest> request) {
+        AccountDto accountDto=new AccountDto();
+        BeanUtils.copyProperties(request.getData(), accountDto);
+        return accountService.createAccount(accountDto);
     }
 
     @GetMapping(value = "/{accountNo}")

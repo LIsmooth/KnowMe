@@ -1,13 +1,17 @@
-package com.leif.knowme.po;
+package com.leif.knowme.api.request;
 
-public class AccountPo {
+/**
+ * @author HelloLeif
+ * @date 2020/8/30
+ */
+public class CreateAccountRequest {
     private String accountId;
     private String accountNo;
     private String accountName;
     private String password;
     private String userId;
     private Integer status;
-    
+
     public String getAccountId() {
         return accountId;
     }

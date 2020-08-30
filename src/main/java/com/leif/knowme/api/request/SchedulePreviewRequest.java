@@ -1,4 +1,4 @@
-package com.leif.knowme.po;
+package com.leif.knowme.api.request;
 
 import java.util.Date;
 import java.util.List;
@@ -7,7 +7,7 @@ import java.util.List;
  * @author HelloLeif
  * @date 2020/8/30
  */
-public class SchedulePreviewPo {
+public class SchedulePreviewRequest {
     private Date planStartTime;
     private List<String> todoIds;
 

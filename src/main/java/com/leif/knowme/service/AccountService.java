@@ -1,6 +1,6 @@
 package com.leif.knowme.service;
 
-import com.leif.knowme.po.AccountPo;
+import com.leif.knowme.dto.AccountDto;
 import com.leif.knowme.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,8 +14,8 @@ public class AccountService {
     @Autowired
     AccountRepository accountRepo;
 
-    public String createAccount(AccountPo accountPo) {
-        return accountRepo.createAccount(accountPo);
+    public String createAccount(AccountDto accountDto) {
+        return accountRepo.createAccount(accountDto);
     }
 
     public boolean checkIsAccountNoExist(String accountNo) {

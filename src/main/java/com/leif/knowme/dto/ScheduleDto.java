@@ -1,10 +1,10 @@
-package com.leif.knowme.po;
+package com.leif.knowme.dto;
 
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SchedulePo {
+public class ScheduleDto {
     private String scheduleId;
     private String accountId;
     private String scheduleName;
@@ -16,13 +16,13 @@ public class SchedulePo {
     private Date realStartTime;
     private Date realEndTime;
     private Date created;
-    private List<ScheduleItemPo> scheduleItemPos;
+    private List<ScheduleItemDto> scheduleItemDtos;
 
-    public SchedulePo() {
+    public ScheduleDto() {
     }
 
-    public SchedulePo(String accountId, String scheduleName, String scheduleNote, Date planStartTime,
-                      Date planEndTime) {
+    public ScheduleDto(String accountId, String scheduleName, String scheduleNote, Date planStartTime,
+                       Date planEndTime) {
         this.accountId = accountId;
         this.scheduleName = scheduleName;
         this.scheduleNote = scheduleNote;
@@ -30,12 +30,12 @@ public class SchedulePo {
         this.planEndTime = planEndTime;
     }
 
-    public List<ScheduleItemPo> getScheduleItemPos() {
-        return scheduleItemPos;
+    public List<ScheduleItemDto> getScheduleItemDtos() {
+        return scheduleItemDtos;
     }
 
-    public void setScheduleItemPos(List<ScheduleItemPo> scheduleItemPos) {
-        this.scheduleItemPos = scheduleItemPos;
+    public void setScheduleItemDtos(List<ScheduleItemDto> scheduleItemDtos) {
+        this.scheduleItemDtos = scheduleItemDtos;
     }
 
     public String getScheduleNote() {
@@ -140,7 +140,7 @@ public class SchedulePo {
                 ", realStartTime=" + realStartTime +
                 ", realEndTime=" + realEndTime +
                 ", created=" + created +
-                ", scheduleItemPos=\n" + scheduleItemPos.stream().map(ScheduleItemPo::toString).collect(Collectors.joining("\n")) +
+                ", scheduleItemPos=\n" + scheduleItemDtos.stream().map(ScheduleItemDto::toString).collect(Collectors.joining("\n")) +
                 '}';
     }
 }
