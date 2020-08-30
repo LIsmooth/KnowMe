@@ -3,12 +3,15 @@ package com.leif.knowme;
 import com.leif.knowme.base.BaseContext;
 import com.leif.knowme.exception.AppException;
 import com.leif.knowme.po.AccountPo;
+import com.leif.knowme.po.SchedulePo;
 import com.leif.knowme.po.TodoPo;
 import com.leif.knowme.po.UserPo;
 import com.leif.knowme.service.AccountService;
 import com.leif.knowme.service.ScheduleService;
 import com.leif.knowme.service.TodoService;
 import com.leif.knowme.service.UserService;
+import org.apache.ibatis.session.SqlSession;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mybatis.generator.api.MyBatisGenerator;
@@ -17,6 +20,7 @@ import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.internal.DefaultShellCallback;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.File;
@@ -35,6 +39,15 @@ public class KnowmeApplicationTests {
     ScheduleService scheduleService;
     @Autowired
     AccountService accountService;
+    @Autowired
+    JdbcTemplate jdbcTemplate;
+
+
+    @Before
+    public void deleteTables()
+    {
+        jdbcTemplate.execute("delete from t_account");
+    }
 
     @Test
     public void processTest() throws InterruptedException, AppException {
@@ -66,8 +79,9 @@ public class KnowmeApplicationTests {
 
         BaseContext context = new BaseContext();
         context.setAccountId(accountId);
-        System.out.println(scheduleService.previewSchedule(context, new Date(),
-                todoPos.stream().map(TodoPo::getTodoId).collect(Collectors.toList())));
+        SchedulePo schedulePo=scheduleService.previewSchedule(context, new Date(),
+                todoPos.stream().map(TodoPo::getTodoId).collect(Collectors.toList()));
+        System.out.println(schedulePo);
 
         context.setAccountId(accountId);
         assert todoService.deleteByTodoId(context, todoId) == 1;
@@ -76,6 +90,7 @@ public class KnowmeApplicationTests {
         assert todoService.getAccountAllTodos(accountId, status, 0)==null;
 
     }
+
 
 /*    public static void main(String[] args) throws Exception {
         List<String> warnings = new ArrayList<>();

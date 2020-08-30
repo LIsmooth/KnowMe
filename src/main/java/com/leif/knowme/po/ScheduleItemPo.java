@@ -6,7 +6,7 @@ import java.util.Date;
 public class ScheduleItemPo {
     private Long itemId;
     private String scheduleId;
-    private String todoId;
+    private TodoPo todoPo;
     private Date planStartTime;
     private Date planEndTime;
     private Date realStartTime;
@@ -17,8 +17,8 @@ public class ScheduleItemPo {
     public ScheduleItemPo() {
     }
 
-    public ScheduleItemPo(String todoId, Date planStartTime, Date planEndTime, int orderNo) {
-        this.todoId = todoId;
+    public ScheduleItemPo(TodoPo todoPo, Date planStartTime, Date planEndTime, int orderNo) {
+        this.todoPo = todoPo;
         this.planStartTime = planStartTime;
         this.planEndTime = planEndTime;
         this.orderNo = orderNo;
@@ -40,12 +40,12 @@ public class ScheduleItemPo {
         this.scheduleId = scheduleId;
     }
 
-    public String getTodoId() {
-        return todoId;
+    public TodoPo getTodoPo() {
+        return todoPo;
     }
 
-    public void setTodoId(String todoId) {
-        this.todoId = todoId;
+    public void setTodoPo(TodoPo todoPo) {
+        this.todoPo = todoPo;
     }
 
     public Date getPlanStartTime() {
@@ -94,5 +94,10 @@ public class ScheduleItemPo {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return planStartTime + "\t" + todoPo.getEventMsg() + "\t" + planEndTime;
     }
 }

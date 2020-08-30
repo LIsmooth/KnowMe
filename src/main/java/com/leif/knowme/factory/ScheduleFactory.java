@@ -37,6 +37,6 @@ public class ScheduleFactory {
         Date startTime = calendar.getTime();
         calendar.add(Calendar.MINUTE, todo.getPlanConsumed());
         Date endTime = calendar.getTime();
-        return new ScheduleItemPo(todo.getTodoId(), startTime, endTime, orderNo);
+        return new ScheduleItemPo(todo, startTime, endTime, orderNo);
     }
 }

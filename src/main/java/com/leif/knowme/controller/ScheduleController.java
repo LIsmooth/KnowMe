@@ -5,6 +5,7 @@ import com.leif.knowme.base.KmRequest;
 import com.leif.knowme.exception.AppException;
 import com.leif.knowme.po.ScheduleItemPo;
 import com.leif.knowme.po.SchedulePo;
+import com.leif.knowme.po.SchedulePreviewPo;
 import com.leif.knowme.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,11 +31,8 @@ public class ScheduleController {
     }
 
     @GetMapping(value = "/preview")
-    public SchedulePo previewSchedule(@RequestBody KmRequest<SchedulePo> kmRequest) throws AppException {
-        SchedulePo schedulePo = kmRequest.getData();
-        List<String> todoIds = schedulePo.getScheduleItemPos().stream()
-                .sorted(Comparator.comparingInt(ScheduleItemPo::getOrderNo))
-                .map(ScheduleItemPo::getTodoId).collect(Collectors.toList());
-        return scheduleService.previewSchedule(new BaseContext(kmRequest), schedulePo.getPlanStartTime(), todoIds);
+    public SchedulePo previewSchedule(@RequestBody KmRequest<SchedulePreviewPo> kmRequest) throws AppException {
+        SchedulePreviewPo previewPo = kmRequest.getData();
+        return scheduleService.previewSchedule(new BaseContext(kmRequest), previewPo.getPlanStartTime(), previewPo.getTodoIds());
     }
 }

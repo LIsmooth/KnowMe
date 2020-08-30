@@ -2,6 +2,7 @@ package com.leif.knowme.po;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class SchedulePo {
     private String scheduleId;
@@ -123,5 +124,23 @@ public class SchedulePo {
 
     public void setCreated(Date created) {
         this.created = created;
+    }
+
+    @Override
+    public String toString() {
+        return "SchedulePo{" +
+                "scheduleId='" + scheduleId + '\'' +
+                ", accountId='" + accountId + '\'' +
+                ", scheduleName='" + scheduleName + '\'' +
+                ", scheduleNote='" + scheduleNote + '\'' +
+                ", summaryId='" + summaryId + '\'' +
+                ", status=" + status +
+                ", planStartTime=" + planStartTime +
+                ", planEndTime=" + planEndTime +
+                ", realStartTime=" + realStartTime +
+                ", realEndTime=" + realEndTime +
+                ", created=" + created +
+                ", scheduleItemPos=\n" + scheduleItemPos.stream().map(ScheduleItemPo::toString).collect(Collectors.joining("\n")) +
+                '}';
     }
 }
