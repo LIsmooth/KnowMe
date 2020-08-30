@@ -2,6 +2,7 @@ package com.leif.knowme.controller;
 
 import com.leif.knowme.base.BaseContext;
 import com.leif.knowme.base.KmRequest;
+import com.leif.knowme.exception.AuthException;
 import com.leif.knowme.po.TodoPo;
 import com.leif.knowme.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/todos")
-public class TodoController {
+public class TodoController extends BaseController {
 
     @Autowired
     TodoService todoService;
@@ -29,7 +30,9 @@ public class TodoController {
     }
 
     @DeleteMapping("/account/{accountId}")
-    public int deleteAllByAccountId(@RequestBody KmRequest<Object> request, @PathVariable String accountId) {
+    public int deleteAllByAccountId(@RequestBody KmRequest<Object> request, @PathVariable String accountId) throws
+            AuthException {
+        checkRequest(request, accountId);
         return todoService.deleteAllByAccountId(accountId);
     }
 
@@ -39,8 +42,10 @@ public class TodoController {
     }
 
     @GetMapping("/account/{accountId}/status/{status}/{pageNo}")
-    public List<TodoPo> getAccountAllTodos(@PathVariable String accountId, @PathVariable String status,
-                                           @PathVariable int pageNo) {
+    public List<TodoPo> getAccountAllTodos(@RequestBody KmRequest<Object> request, @PathVariable String accountId,
+                                           @PathVariable String status,
+                                           @PathVariable int pageNo) throws AuthException {
+        checkRequest(request, accountId);
         return todoService
                 .getAccountAllTodos(accountId,
                         Arrays.stream(status.split("-")).mapToInt(Integer::valueOf).boxed().collect(
