@@ -8,6 +8,18 @@ public class KmRequest<T> {
     private KmHeader header;
     private T data;
 
+    public static class KmHeader {
+        String accountId;
+
+        public String getAccountId() {
+            return accountId;
+        }
+
+        public void setAccountId(String accountId) {
+            this.accountId = accountId;
+        }
+    }
+
     public KmHeader getHeader() {
         return header;
     }

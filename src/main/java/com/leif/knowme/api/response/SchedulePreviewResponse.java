@@ -13,9 +13,9 @@ import java.util.List;
  * @date 2020/8/30
  */
 public class SchedulePreviewResponse {
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:00")
     private Date planStartTime;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:00")
     private Date planEndTime;
 
     private List<PreviewTodo> todos;
@@ -42,9 +42,9 @@ public class SchedulePreviewResponse {
         String eventMsg;
         Integer planConsumed;
         Integer orderNo;
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:00")
         Date planStartTime;
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:00")
         Date planEndTime;
 
         public String getTodoId() {
