@@ -16,11 +16,16 @@ import com.leif.knowme.service.UserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mybatis.generator.api.MyBatisGenerator;
+import org.mybatis.generator.config.Configuration;
+import org.mybatis.generator.config.xml.ConfigurationParser;
+import org.mybatis.generator.internal.DefaultShellCallback;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.File;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -98,7 +103,7 @@ public class KnowmeApplicationTests {
     }
 
 
-/*    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
         List<String> warnings = new ArrayList<>();
         boolean overwrite = true;
         File configFile = new File("src\\main\\resources\\mybatis\\generator\\mybatis-generator.xml");
@@ -107,7 +112,7 @@ public class KnowmeApplicationTests {
         DefaultShellCallback callback = new DefaultShellCallback(overwrite);
         MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, 		warnings);
         myBatisGenerator.generate(null);
-    }*/
+    }
 
 
 
