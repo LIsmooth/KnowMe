@@ -1,5 +1,7 @@
 package com.leif.knowme.api.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 import java.util.List;
 
@@ -8,6 +10,8 @@ import java.util.List;
  * @date 2020/8/30
  */
 public class SchedulePreviewRequest {
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date planStartTime;
     private List<String> todoIds;
 

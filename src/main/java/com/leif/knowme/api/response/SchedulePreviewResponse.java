@@ -1,5 +1,6 @@
 package com.leif.knowme.api.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.leif.knowme.dto.ScheduleItemDto;
 import com.leif.knowme.dto.ScheduleDto;
 
@@ -12,7 +13,9 @@ import java.util.List;
  * @date 2020/8/30
  */
 public class SchedulePreviewResponse {
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date planStartTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date planEndTime;
 
     private List<PreviewTodo> todos;
@@ -39,7 +42,9 @@ public class SchedulePreviewResponse {
         String eventMsg;
         Integer planConsumed;
         Integer orderNo;
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
         Date planStartTime;
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
         Date planEndTime;
 
         public String getTodoId() {

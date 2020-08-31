@@ -139,5 +139,5 @@ public interface ScheduleItemMapper {
     })
     int updateByPrimaryKey(ScheduleItem record);
 
-    int insertItems(List<ScheduleItem> scheduleItemDos);
+    int insertItems(@Param("scheduleItems") List<ScheduleItem> scheduleItemDos);
 }

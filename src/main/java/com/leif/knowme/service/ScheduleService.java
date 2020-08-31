@@ -21,17 +21,17 @@ public class ScheduleService {
     ScheduleRepository scheduleRepo;
     @Autowired
     TodoRepository todoRepo;
-    @Autowired
-    ScheduleFactory scheduleFactory;
 
     @Transactional(rollbackFor = Exception.class)
-    public int createSchedule(ScheduleDto scheduleDto) {
+    public int createSchedule(BaseContext context, ScheduleDto scheduleDto, List<String> todoIds) throws AppException {
+        List<TodoDto> todoDtos = todoRepo.getTodosByIds(scheduleDto.getAccountId(), todoIds);
+        ScheduleFactory.assembleTodos(scheduleDto, todoDtos);
         return scheduleRepo.saveSchedule(scheduleDto);
     }
 
     public ScheduleDto previewSchedule(BaseContext context, Date planStartTime, List<String> todoIds) throws
             AppException {
         List<TodoDto> todoDtos = todoRepo.getTodosByIds(context.getAccountId(), todoIds);
-        return scheduleFactory.buildFromTodos(planStartTime, todoDtos);
+        return ScheduleFactory.buildFromTodos(planStartTime, todoDtos);
     }
 }

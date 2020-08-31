@@ -2,7 +2,6 @@ package com.leif.knowme.dto;
 
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ScheduleDto {
     private String scheduleId;
@@ -128,7 +127,7 @@ public class ScheduleDto {
 
     @Override
     public String toString() {
-        return "SchedulePo{" +
+        return "ScheduleDto{" +
                 "scheduleId='" + scheduleId + '\'' +
                 ", accountId='" + accountId + '\'' +
                 ", scheduleName='" + scheduleName + '\'' +
@@ -140,7 +139,7 @@ public class ScheduleDto {
                 ", realStartTime=" + realStartTime +
                 ", realEndTime=" + realEndTime +
                 ", created=" + created +
-                ", scheduleItemPos=\n" + scheduleItemDtos.stream().map(ScheduleItemDto::toString).collect(Collectors.joining("\n")) +
+                ", scheduleItemDtos=" + scheduleItemDtos +
                 '}';
     }
 }
