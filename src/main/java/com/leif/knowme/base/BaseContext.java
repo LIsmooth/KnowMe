@@ -10,6 +10,10 @@ public class BaseContext {
         this.accountId = kmRequest.getHeader().getAccountId();
     }
 
+    public BaseContext(String accountId) {
+        this.accountId = accountId;
+    }
+
     public String getAccountId() {
         return accountId;
     }

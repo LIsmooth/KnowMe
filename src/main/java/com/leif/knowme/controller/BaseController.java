@@ -1,6 +1,5 @@
 package com.leif.knowme.controller;
 
-import com.leif.knowme.base.KmRequest;
 import com.leif.knowme.exception.AuthException;
 
 /**
@@ -8,9 +7,7 @@ import com.leif.knowme.exception.AuthException;
  * @date 2020/8/30
  */
 public abstract class BaseController {
-    protected void checkRequest(KmRequest<Object> request, String accountId) throws AuthException {
-        if (!request.getHeader().getAccountId().equals(accountId)) {
-            throw new AuthException("Not your account! Asshole!");
-        }
+    protected void checkRequest(String token, String accountId) throws AuthException {
+
     }
 }

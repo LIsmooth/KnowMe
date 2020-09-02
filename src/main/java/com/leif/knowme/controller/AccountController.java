@@ -6,7 +6,11 @@ import com.leif.knowme.dto.AccountDto;
 import com.leif.knowme.service.AccountService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author HelloLeif
@@ -20,7 +24,7 @@ public class AccountController {
 
     @PostMapping(headers = "Accept=application/json")
     public String createAccount(@RequestBody KmRequest<CreateAccountRequest> request) {
-        AccountDto accountDto=new AccountDto();
+        AccountDto accountDto = new AccountDto();
         BeanUtils.copyProperties(request.getData(), accountDto);
         return accountService.createAccount(accountDto);
     }

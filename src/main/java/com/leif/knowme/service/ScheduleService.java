@@ -23,7 +23,7 @@ public class ScheduleService {
     TodoRepository todoRepo;
 
     @Transactional(rollbackFor = Exception.class)
-    public int createSchedule(BaseContext context, ScheduleDto scheduleDto, List<String> todoIds) throws AppException {
+    public int createSchedule(ScheduleDto scheduleDto, List<String> todoIds) throws AppException {
         List<TodoDto> todoDtos = todoRepo.getTodosByIds(scheduleDto.getAccountId(), todoIds);
         ScheduleFactory.assembleTodos(scheduleDto, todoDtos);
         return scheduleRepo.saveSchedule(scheduleDto);

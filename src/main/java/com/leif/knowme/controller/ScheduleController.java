@@ -11,7 +11,6 @@ import com.leif.knowme.exception.AuthException;
 import com.leif.knowme.factory.ScheduleFactory;
 import com.leif.knowme.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,10 +26,10 @@ public class ScheduleController {
     @PostMapping(headers = "Accept=application/json")
     public int createSchedule(@RequestBody KmRequest<CreateScheduleRequest> kmRequest) throws AuthException, AppException {
         ScheduleDto scheduleDto = ScheduleFactory.buildFromCreateRequest(kmRequest);
-        return scheduleService.createSchedule(new BaseContext(kmRequest), scheduleDto, kmRequest.getData().getTodoIds());
+        return scheduleService.createSchedule(scheduleDto, kmRequest.getData().getTodoIds());
     }
 
-    @GetMapping(value = "/preview")
+    @PostMapping(value = "/preview")
     public SchedulePreviewResponse previewSchedule(@RequestBody KmRequest<SchedulePreviewRequest> kmRequest) throws
             AppException {
         SchedulePreviewRequest previewPo = kmRequest.getData();
