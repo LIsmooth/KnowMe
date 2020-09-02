@@ -22,16 +22,20 @@ public class ScheduleRepository {
 
     public int saveSchedule(ScheduleDto scheduleDto) {
         Schedule schedule = extractSchedule(scheduleDto);
-        schedule.setScheduleId(UUIDUtils.generateUUID());
-        List<ScheduleItem> scheduleItemDos = extractScheduleItems(scheduleDto);
+        String scheduleId = UUIDUtils.generateUUID();
+        schedule.setScheduleId(scheduleId);
+
+        List<ScheduleItem> scheduleItemDos = extractScheduleItems(scheduleId,scheduleDto);
         scheduleMapper.insertSelective(schedule);
         return scheduleItemMapper.insertItems(scheduleItemDos);
     }
 
-    private List<ScheduleItem> extractScheduleItems(ScheduleDto scheduleDto) {
+    private List<ScheduleItem> extractScheduleItems(String scheduleId, ScheduleDto scheduleDto) {
         return scheduleDto.getScheduleItemDtos().stream().map(item -> {
             ScheduleItem scheduleItem = new ScheduleItem();
             BeanUtils.copyProperties(item, scheduleItem);
+            scheduleItem.setScheduleId(scheduleId);
+            scheduleItem.setTodoId(item.getTodoDto().getTodoId());
             return scheduleItem;
         }).collect(Collectors.toList());
     }
