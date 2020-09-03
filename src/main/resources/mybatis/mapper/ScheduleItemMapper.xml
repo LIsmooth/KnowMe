@@ -289,7 +289,7 @@
   <insert id="insertItems" >
     insert into t_schedule_item (schedule_id, todo_id, plan_start_time, plan_end_time, order_no) values
     <foreach collection="scheduleItems" item="item" separator=",">
-      (#{scheduleId},#{todoId},#{planStartTime},#{planEndTime},#{orderNo})
+      (#{item.scheduleId},#{item.todoId},#{item.planStartTime},#{item.planEndTime},#{item.orderNo})
     </foreach>
   </insert>
 </mapper>
