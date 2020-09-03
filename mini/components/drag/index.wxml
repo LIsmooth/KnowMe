@@ -13,11 +13,11 @@
 	>
 		<view class="cell">
 			<view class="cell__hd">
-				<view class='index'>{{index+1}}</view>
+				<view class='index'></view>
 			</view>
 			<view class="cell__bd">
 				<view class="name">{{item.data.title}}</view>
-				<view class="des">{{item.data.description}}</view>
+				<!-- <view class="des">{{item.data.description}}</view> -->
 			</view>
 		</view>
 	</view>

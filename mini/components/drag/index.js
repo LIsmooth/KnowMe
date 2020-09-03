@@ -336,11 +336,10 @@ Component({
 			this.clearData();
 			this.setData({itemTransition: false});
 
-			let delItem = (item, extraNode) => ({
+			let delItem = (item) => ({
 				id: item.dragId,
 				slot: item.slot,
 				fixed: item.fixed,
-				extraNode: extraNode,
 				tranX: "0%",
 				tranY: "0%",
 				data: item

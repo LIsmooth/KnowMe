@@ -33,33 +33,35 @@
 
 .cell {
   display: flex;
-  padding: 20rpx;
-  height:20rpx;
+  padding: 15rpx;
+  height:35rpx;
   border-bottom: 1rpx solid #ebedf0;
   background: #FFFFFF; }
   .cell__hd {
-    font-size: 0; }
+    font-size: 0;
+    width:30rpx;
+  }
     .cell__hd .index {
       display: block;
-      color: #179c2e;
-      font-size: 32rpx;
-      font-weight: bold;
-      left: 35rpx;
-      top: 40rpx;
-      width: 30rpx;
-      height: 30rpx;
-      margin-right: 20rpx;
-      border-radius: 12rpx; }
+      position: absolute;
+      top: 50%;
+      -ms-transform: translateY(-50%);
+      transform: translateY(-50%);
+      
+      background-color: #179c2e;
+      width:20rpx;
+      height: 20rpx;
+      border-radius: 10rpx; }
   .cell__bd {
     flex: 1; }
     .cell__bd .name {
       display: -webkit-box;
       -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;
+      -webkit-line-clamp: 1;
       overflow: hidden;
       word-break: break-all;
       font-size: 28rpx;
-      margin-bottom: 4rpx; }
+      margin:0 auto;}
     .cell__bd .des {
       display: -webkit-box;
       -webkit-box-orient: vertical;
