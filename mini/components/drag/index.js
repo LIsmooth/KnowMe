@@ -37,7 +37,8 @@ const compareVersion = (v1, v2) => {
 
 Component({
 	options: {
-		multipleSlots: true
+		multipleSlots: true,
+		pureDataPattern: /^_/ 
 	},
 	properties: {
 		listData: {type: Array, value: []},                    // 数据源
@@ -48,16 +49,16 @@ Component({
 	},
 	data: {
 		/* 未渲染数据 */
-		pageMetaSupport: false,                                 // 当前版本是否支持 page-meta 标签
-		windowHeight: 0,                                        // 视窗高度
-		platform: '',                                           // 平台信息
-		realTopSize: 0,                                         // 计算后顶部固定高度实际值
-		realBottomSize: 0,                                      // 计算后底部固定高度实际值
-		rows: 0,                                                // 行数
-		itemDom: {width: 0, height: 0, left: 0, top: 0},        // 每一项 item 的 dom 信息, 由于大小一样所以只存储一个
-		itemWrapDom: {width: 0, height: 0, left: 0, top: 0},    // 整个拖拽区域的 dom 信息
-		startId: 0,                                             // 初始触摸点 identifier
-		preStartKey: -1,                                        // 前一次排序时候的起始 sortKey 值
+		_pageMetaSupport: false,                                 // 当前版本是否支持 page-meta 标签
+		_windowHeight: 0,                                        // 视窗高度
+		_platform: '',                                           // 平台信息
+		_realTopSize: 0,                                         // 计算后顶部固定高度实际值
+		_realBottomSize: 0,                                      // 计算后底部固定高度实际值
+		_rows: 0,                                                // 行数
+		_itemDom: {width: 0, height: 0, left: 0, top: 0},        // 每一项 item 的 dom 信息, 由于大小一样所以只存储一个
+		_itemWrapDom: {width: 0, height: 0, left: 0, top: 0},    // 整个拖拽区域的 dom 信息
+		_startId: 0,                                             // 初始触摸点 identifier
+		_preStartKey: -1,                                        // 前一次排序时候的起始 sortKey 值
 
 		/* 渲染数据 */
 		list: [],                                               // 渲染数据列
@@ -85,19 +86,19 @@ Component({
 			if (this.data.dragging) return;
 			this.setData({dragging: true});
 
-			let {platform, itemDom, itemWrapDom} = this.data,
-				{pageX: startPageX, pageY: startPageY, identifier: startId} = startTouch;
+			let {_platform, _itemDom, _itemWrapDom} = this.data,
+				{pageX: startPageX, pageY: startPageY, identifier: _startId} = startTouch;
 
 			// 计算X,Y轴初始位移, 使 item 中心移动到点击处
-			let tranX = startPageX - itemDom.width / 2 - itemWrapDom.left,
-				tranY = startPageY - itemDom.height / 2 - itemWrapDom.top;
+			let tranX = startPageX - _itemDom.width / 2 - _itemWrapDom.left,
+				tranY = startPageY - _itemDom.height / 2 - _itemWrapDom.top;
 			// 单列时候X轴初始不做位移
 			if (this.data.columns === 1) tranX = 0;
 
-			this.data.startId = startId;
+			this.data._startId = _startId;
 			this.setData({cur: index, curZ: index, tranX, tranY});
 
-			if (platform !== "devtools") wx.vibrateShort();
+			if (_platform !== "devtools") wx.vibrateShort();
 		},
 		touchMove(e) {
 			// 获取触摸点信息
@@ -106,42 +107,42 @@ Component({
 
 			if (!this.data.dragging) return;
 
-			let {pageMetaSupport, windowHeight, realTopSize, realBottomSize, itemDom, itemWrapDom, preStartKey, columns, rows} = this.data,
+			let {_pageMetaSupport, _windowHeight, _realTopSize, _realBottomSize, _itemDom, _itemWrapDom, _preStartKey, columns, _rows} = this.data,
 				{pageX: currentPageX, pageY: currentPageY, identifier: currentId, clientY: currentClientY} = currentTouch;
 
 			// 如果不是同一个触发点则返回
-			if (this.data.startId !== currentId) return;
+			if (this.data._startId !== currentId) return;
 
 			// 通过 当前坐标点, 初始坐标点, 初始偏移量 来计算当前偏移量
-			let tranX = currentPageX - itemDom.width / 2 - itemWrapDom.left,
-				tranY = currentPageY - itemDom.height / 2 - itemWrapDom.top;
+			let tranX = currentPageX - _itemDom.width / 2 - _itemWrapDom.left,
+				tranY = currentPageY - _itemDom.height / 2 - _itemWrapDom.top;
 			// 单列时候X轴初始不做位移
 			if (columns === 1) tranX = 0;
 
 			// 到顶到底自动滑动
-			if (currentClientY > windowHeight - itemDom.height - realBottomSize) {
+			if (currentClientY > _windowHeight - _itemDom.height - _realBottomSize) {
 				// 当前触摸点pageY + item高度 - (屏幕高度 - 底部固定区域高度)
 
-				if (pageMetaSupport) {
+				if (_pageMetaSupport) {
 					this.triggerEvent("scroll", {
-						scrollTop: currentPageY + itemDom.height - (windowHeight - realBottomSize)
+						scrollTop: currentPageY + _itemDom.height - (_windowHeight - _realBottomSize)
 					});
 				} else {
 					wx.pageScrollTo({
-						scrollTop: currentPageY + itemDom.height - (windowHeight - realBottomSize),
+						scrollTop: currentPageY + _itemDom.height - (_windowHeight - _realBottomSize),
 						duration: 300
 					});
 				}
-			} else if (currentClientY < itemDom.height + realTopSize) {
+			} else if (currentClientY < _itemDom.height + _realTopSize) {
 				// 当前触摸点pageY - item高度 - 顶部固定区域高度
 
-				if (pageMetaSupport) {
+				if (_pageMetaSupport) {
 					this.triggerEvent("scroll", {
-						scrollTop: currentPageY - itemDom.height - realTopSize
+						scrollTop: currentPageY - _itemDom.height - _realTopSize
 					});
 				} else {
 					wx.pageScrollTo({
-						scrollTop: currentPageY - itemDom.height - realTopSize,
+						scrollTop: currentPageY - _itemDom.height - _realTopSize,
 						duration: 300
 					});
 				}
@@ -152,15 +153,15 @@ Component({
 
 			// 获取 startKey 和 endKey
 			let startKey = parseInt(e.currentTarget.dataset.key);
-			let curX = Math.round(tranX / itemDom.width), curY = Math.round(tranY / itemDom.height);
+			let curX = Math.round(tranX / _itemDom.width), curY = Math.round(tranY / _itemDom.height);
 			let endKey = curX + columns * curY;
 
 			// 超出范围则返回
-			if (IsOutRange(curX, columns, curY, rows, endKey, this.data.list.length)) return;
+			if (IsOutRange(curX, columns, curY, _rows, endKey, this.data.list.length)) return;
 
 			// 防止拖拽过程中发生乱序问题
-			if (startKey === endKey || startKey === preStartKey) return;
-			this.data.preStartKey = startKey;
+			if (startKey === endKey || startKey === _preStartKey) return;
+			this.data._preStartKey = startKey;
 
 			// 触发排序
 			this.sort(startKey, endKey);
@@ -211,7 +212,7 @@ Component({
 		 * 根据排序后 list 数据进行位移计算
 		 */
 		updateList(data, vibrate = true) {
-			let {platform} = this.data;
+			let {_platform} = this.data;
 
 			let list = data.map((item, index) => {
 				item.tranX = `${(item.sortKey % this.data.columns) * 100}%`;
@@ -221,7 +222,7 @@ Component({
 			this.setData({list: list});
 
 			if (!vibrate) return;
-			if (platform !== "devtools") wx.vibrateShort();
+			if (_platform !== "devtools") wx.vibrateShort();
 
 			this.triggerCustomEvent(list, "change");
 		},
@@ -230,7 +231,7 @@ Component({
 		 */
 		clearData() {
 			this.setData({
-				preStartKey: -1,
+				_preStartKey: -1,
 				dragging: false,
 				cur: -1,
 				tranX: 0,
@@ -302,29 +303,29 @@ Component({
 		initDom() {
 			let {windowWidth, windowHeight, platform, SDKVersion} = wx.getSystemInfoSync();
 
-			this.data.pageMetaSupport = compareVersion(SDKVersion, '2.9.0') >= 0;
+			this.data._pageMetaSupport = compareVersion(SDKVersion, '2.9.0') >= 0;
 
 			let remScale = (windowWidth || 375) / 375,
-				realTopSize = this.data.topSize * remScale / 2,
-				realBottomSize = this.data.bottomSize * remScale / 2;
+				_realTopSize = this.data.topSize * remScale / 2,
+				_realBottomSize = this.data.bottomSize * remScale / 2;
 
-			this.data.windowHeight = windowHeight;
-			this.data.platform = platform;
-			this.data.realTopSize = realTopSize;
-			this.data.realBottomSize = realBottomSize;
+			this.data._windowHeight = windowHeight;
+			this.data._platform = platform;
+			this.data._realTopSize = _realTopSize;
+			this.data._realBottomSize = _realBottomSize;
 
 			this.createSelectorQuery().select(".item").boundingClientRect((res) => {
-				let rows = Math.ceil(this.data.list.length / this.data.columns);
+				let _rows = Math.ceil(this.data.list.length / this.data.columns);
 
-				this.data.rows = rows;
-				this.data.itemDom = res;
+				this.data._rows = _rows;
+				this.data._itemDom = res;
 				this.setData({
-					itemWrapHeight: rows * res.height,
+					itemWrapHeight: _rows * res.height,
 				});
 
 				this.createSelectorQuery().select(".item-wrap").boundingClientRect((res) => {
-					this.data.itemWrapDom = res;
-					this.data.itemWrapDom.top += this.data.scrollTop
+					this.data._itemWrapDom = res;
+					this.data._itemWrapDom.top += this.data.scrollTop
 				}).exec();
 			}).exec();
 		},
@@ -368,7 +369,7 @@ Component({
 			});
 
 			if (list.length === 0) {
-				this.setData({itemWrapHeight: 0});
+				this.setData({itemWrapHeight: 0,list:list});
 				return;
 			}
 
