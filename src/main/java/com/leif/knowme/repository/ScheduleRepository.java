@@ -45,4 +45,8 @@ public class ScheduleRepository {
         BeanUtils.copyProperties(scheduleDto, scheduleDo);
         return scheduleDo;
     }
+
+    public ScheduleDto getLatestSchedule(String accountId) {
+        return scheduleMapper.getLatestSchedule(accountId);
+    }
 }

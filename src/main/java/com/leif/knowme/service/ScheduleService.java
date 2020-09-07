@@ -34,4 +34,8 @@ public class ScheduleService {
         List<TodoDto> todoDtos = todoRepo.getTodosByIds(context.getAccountId(), todoIds);
         return ScheduleFactory.buildFromTodos(planStartTime, todoDtos);
     }
+
+    public ScheduleDto getLatestSchedule(String accountId) {
+        return scheduleRepo.getLatestSchedule(accountId);
+    }
 }

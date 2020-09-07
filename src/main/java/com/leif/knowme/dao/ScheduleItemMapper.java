@@ -1,5 +1,6 @@
 package com.leif.knowme.dao;
 
+import com.leif.knowme.dto.ScheduleItemDto;
 import com.leif.knowme.entity.ScheduleItem;
 import com.leif.knowme.entity.ScheduleItemExample;
 import java.util.List;
@@ -136,4 +137,6 @@ public interface ScheduleItemMapper {
     int updateByPrimaryKey(ScheduleItem record);
 
     int insertItems(@Param("scheduleItems") List<ScheduleItem> scheduleItemDos);
+
+    List<ScheduleItemDto> getByScheduleId(String scheduleId);
 }

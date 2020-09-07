@@ -11,6 +11,7 @@ public class TodoDto {
     String accountId;
     Integer planConsumed;
     Integer realConsumed;
+    Integer type;
     String eventMsg;
     Integer status;
 
@@ -22,6 +23,14 @@ public class TodoDto {
         this.planConsumed = planConsumed;
         this.eventMsg = eventMsg;
         this.status = status;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public String getTodoId() {

@@ -1,5 +1,6 @@
 package com.leif.knowme.dao;
 
+import com.leif.knowme.dto.ScheduleDto;
 import com.leif.knowme.entity.Schedule;
 import com.leif.knowme.entity.ScheduleExample;
 import java.util.List;
@@ -138,4 +139,6 @@ public interface ScheduleMapper {
         "where schedule_id = #{scheduleId,jdbcType=VARCHAR}"
     })
     int updateByPrimaryKey(Schedule record);
+
+    ScheduleDto getLatestSchedule(String accountId);
 }
