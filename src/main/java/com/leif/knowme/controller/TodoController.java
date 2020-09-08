@@ -3,13 +3,21 @@ package com.leif.knowme.controller;
 import com.leif.knowme.api.request.CreateTodoRequest;
 import com.leif.knowme.base.BaseContext;
 import com.leif.knowme.base.KmRequest;
-import com.leif.knowme.exception.AuthException;
 import com.leif.knowme.dto.TodoDto;
+import com.leif.knowme.exception.AuthException;
 import com.leif.knowme.service.AuthService;
 import com.leif.knowme.service.TodoService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +25,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/todos")
-public class TodoController extends BaseController {
+public class TodoController {
 
     @Autowired
     TodoService todoService;
@@ -31,16 +39,13 @@ public class TodoController extends BaseController {
         return todoService.createTodo(todoDto);
     }
 
-    @DeleteMapping("/{todoId}")
-    public int deleteByTodoId(@PathVariable String todoId,@RequestParam String token) {
-        String accountId = authService.getAccountIdFromToken(token);
-        return todoService.deleteByTodoId(new BaseContext(token), todoId);
+    @DeleteMapping("/{todoId}/account/{accountId}")
+    public int deleteByTodoId(@PathVariable String todoId, @PathVariable String accountId) {
+        return todoService.deleteByTodoId(new BaseContext(accountId), todoId);
     }
 
     @DeleteMapping("/account/{accountId}")
-    public int deleteAllByAccountId(@PathVariable String accountId, @RequestParam String token) throws
-            AuthException {
-        checkRequest(token, accountId);
+    public int deleteAllByAccountId(@PathVariable String accountId) {
         return todoService.deleteAllByAccountId(accountId);
     }
 
@@ -52,9 +57,7 @@ public class TodoController extends BaseController {
     @GetMapping("/account/{accountId}/status/{status}/{pageNo}")
     public List<TodoDto> getAccountAllTodos(@PathVariable String accountId,
                                             @PathVariable String status,
-                                            @PathVariable int pageNo,
-                                            @RequestParam String token) throws AuthException {
-        checkRequest(token, accountId);
+                                            @PathVariable int pageNo) {
         return todoService
                 .getAccountAllTodos(accountId,
                         Arrays.stream(status.split("-")).mapToInt(Integer::valueOf).boxed().collect(
