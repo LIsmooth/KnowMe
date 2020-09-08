@@ -10,7 +10,7 @@
     <result column="plan_end_time" property="planEndTime"/>
     <result column="real_start_time" property="realEndTime"/>
     <result column="real_end_time" property="realEndTime"/>
-    <collection property="scheduleItemDtos" column="schedule_id" select=""/>
+    <collection property="scheduleItemDtos" column="schedule_id" select="com.leif.knowme.dao.ScheduleItemMapper.getByScheduleId"/>
   </resultMap>
   <select id="getLatestSchedule" resultMap="ScheduleItems">
     select schedule_id,
@@ -22,7 +22,7 @@
            real_start_time,
            real_end_time
     from t_schedule
-    where status > 0
+    where status >=0
       and account_id = #{accountId}
     order by plan_start_time
     limit 1;

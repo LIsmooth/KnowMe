@@ -4,6 +4,11 @@ import java.util.Date;
 import java.util.List;
 
 public class ScheduleDto {
+
+    public static final int STATUS_DELETED = -10;
+    public static final int STATUS_CREATE = 0;
+    public static final int STATUS_COMPLETE = 50;
+
     private String scheduleId;
     private String accountId;
     private String scheduleName;

@@ -3,7 +3,9 @@ package com.leif.knowme;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.leif.knowme.api.response.ScheduleResponse;
 import com.leif.knowme.base.BaseContext;
+import com.leif.knowme.dto.mapper.ScheduleDtoMr;
 import com.leif.knowme.exception.AppException;
 import com.leif.knowme.dto.AccountDto;
 import com.leif.knowme.dto.ScheduleDto;
@@ -13,6 +15,7 @@ import com.leif.knowme.service.AccountService;
 import com.leif.knowme.service.ScheduleService;
 import com.leif.knowme.service.TodoService;
 import com.leif.knowme.service.UserService;
+import com.leif.knowme.util.JwtUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,6 +46,8 @@ public class KnowmeApplicationTests {
     AccountService accountService;
     @Autowired
     JdbcTemplate jdbcTemplate;
+    @Autowired
+    JwtUtils jwtUtils;
 
 
     @Before
@@ -86,12 +91,20 @@ public class KnowmeApplicationTests {
         assert todoDtos.size() == 2;
         assert todoDtos.get(0).getEventMsg().equals(eventMsg);
 
+        ScheduleDto dto=new ScheduleDto(accountId,"Test schedule","this is note",new Date(),new Date(new Date().getTime()+3000));
+        assert scheduleService.createSchedule(dto,Arrays.asList(todoId,todoId2))==2;
+
         BaseContext context = new BaseContext();
         context.setAccountId(accountId);
         ScheduleDto scheduleDto =scheduleService.previewSchedule(context, new Date(),
                 todoDtos.stream().map(TodoDto::getTodoId).collect(Collectors.toList()));
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String json = ow.writeValueAsString(scheduleDto);
+        System.out.println(json);
+
+        scheduleDto = scheduleService.getLatestSchedule(accountId);
+        ScheduleResponse response=ScheduleDtoMr.INSTANCE.scheduleDto2ScheduleResponse(scheduleDto);
+        json = ow.writeValueAsString(response);
         System.out.println(json);
 
         context.setAccountId(accountId);
@@ -102,8 +115,17 @@ public class KnowmeApplicationTests {
 
     }
 
+    @Test
+    public void tokenTest(){
+        String accountId="HelloLeif";
+        String token = jwtUtils.doGenerateToken(new HashMap<>(0),accountId);
+        System.out.println(token);
+        String accountId2 = jwtUtils.getUsernameFromToken(token);
+        assert accountId.equals(accountId2);
+        System.out.println(accountId2);
+    }
 
-    public static void main(String[] args) throws Exception {
+/*    public static void main(String[] args) throws Exception {
         List<String> warnings = new ArrayList<>();
         boolean overwrite = true;
         File configFile = new File("src\\main\\resources\\mybatis\\generator\\mybatis-generator.xml");
@@ -112,7 +134,7 @@ public class KnowmeApplicationTests {
         DefaultShellCallback callback = new DefaultShellCallback(overwrite);
         MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, 		warnings);
         myBatisGenerator.generate(null);
-    }
+    }*/
 
 
 

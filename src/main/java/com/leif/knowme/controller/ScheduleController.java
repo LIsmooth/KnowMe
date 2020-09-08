@@ -7,6 +7,7 @@ import com.leif.knowme.api.response.ScheduleResponse;
 import com.leif.knowme.base.BaseContext;
 import com.leif.knowme.base.KmRequest;
 import com.leif.knowme.dto.ScheduleDto;
+import com.leif.knowme.dto.mapper.ScheduleDtoMr;
 import com.leif.knowme.exception.AppException;
 import com.leif.knowme.exception.AuthException;
 import com.leif.knowme.factory.ScheduleFactory;
@@ -43,6 +44,6 @@ public class ScheduleController {
     public ScheduleResponse getLatestSchedule(@RequestParam("token") String token){
         String accountId = authService.getAccountIdFromToken(token);
         ScheduleDto scheduleDto=scheduleService.getLatestSchedule(accountId);
-        return new ScheduleResponse(scheduleDto);
+        return ScheduleDtoMr.INSTANCE.scheduleDto2ScheduleResponse(scheduleDto);
     }
 }
