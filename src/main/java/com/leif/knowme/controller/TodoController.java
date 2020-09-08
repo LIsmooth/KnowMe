@@ -4,7 +4,6 @@ import com.leif.knowme.api.request.CreateTodoRequest;
 import com.leif.knowme.base.BaseContext;
 import com.leif.knowme.base.KmRequest;
 import com.leif.knowme.dto.TodoDto;
-import com.leif.knowme.exception.AuthException;
 import com.leif.knowme.service.AuthService;
 import com.leif.knowme.service.TodoService;
 import org.springframework.beans.BeanUtils;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
