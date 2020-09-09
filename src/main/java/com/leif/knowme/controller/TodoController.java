@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/todos")
+@RequestMapping(value = "todos")
 public class TodoController {
 
     @Autowired

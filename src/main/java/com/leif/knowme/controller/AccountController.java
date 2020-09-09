@@ -6,17 +6,14 @@ import com.leif.knowme.dto.AccountDto;
 import com.leif.knowme.service.AccountService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author HelloLeif
  * @date 2020/8/24
  */
-@RestController("/account")
+@RestController()
+@RequestMapping("account")
 public class AccountController {
 
     @Autowired

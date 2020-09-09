@@ -3,6 +3,8 @@ spring:
     active: pro
   jackson:
     time-zone: GMT+8
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 mybatis:
   mapper-locations: classpath:mybatis/mapper/*.xml
   type-aliases-package: com.leif.knowme.model
