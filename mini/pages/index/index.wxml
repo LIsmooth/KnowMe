@@ -1,25 +1,29 @@
-<view
- class="item {{cur == index ? 'cur':''}} {{curZ == index ? 'zIndex':''}} {{itemTransition && index !== cur ? 'itemTransition':''}} {{item.fixed ? 'fixed' : ''}}"
- wx:for="{{todos}}"
- wx:key="id"
- data-key="{{item.sortKey}}"
- data-detail="{{item}}"
- data-index="{{index}}"
- style="transform: translate3d({{index === cur ? tranX + 'px' : item.tranX}}, {{index === cur ? tranY + 'px' : item.tranY}}, 0);width: 100"
- bindtap="todoClick"
->
-	<view class="cell">
-		<view class="cell__hd">
-		</view>
-		<view class="cell__bd">
-			<view class="name">{{item.title}}</view>
-			<view class="des">{{item.description}}</view>
-		</view>
-			<view class="cell__des">
-				<view class="consumed">
-					{{item.planConsumed}}m
-				</view>
+<view wx:if="{{todos.count>0}}">
+	<view
+	class="item {{cur == index ? 'cur':''}} {{curZ == index ? 'zIndex':''}} {{itemTransition && index !== cur ? 'itemTransition':''}} {{item.fixed ? 'fixed' : ''}}"
+	wx:for="{{todos}}"
+	wx:key="id"
+	data-key="{{item.sortKey}}"
+	data-detail="{{item}}"
+	data-index="{{index}}"
+	style="transform: translate3d({{index === cur ? tranX + 'px' : item.tranX}}, {{index === cur ? tranY + 'px' : item.tranY}}, 0);width: 100"
+	bindtap="todoClick"
+	>
+		<view class="cell">
+			<view class="cell__hd">
 			</view>
+			<view class="cell__bd">
+				<view class="name">{{item.title}}</view>
+				<view class="des">{{item.description}}</view>
+			</view>
+				<view class="cell__des">
+					<view class="consumed">
+						{{item.planConsumed}}m
+					</view>
+				</view>
+		</view>
 	</view>
-
-</view>·
+</view>
+<view wx:else>
+	<view>时间碎片还在漂浮~</view>
+</view>
