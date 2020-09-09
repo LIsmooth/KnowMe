@@ -45,6 +45,6 @@ Promise.prototype.finally = function (callback) {
 
 module.exports = {
     register_complex: function register_complex(data) {
-        return request('/wxapp/register', true, 'post', data);
+        return request('/wxapp/register', 'POST', data);
     }
 }

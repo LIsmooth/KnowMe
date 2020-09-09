@@ -1,4 +1,4 @@
-const KM = require('KMAPI.js')
+const KM = require('./KMAPI.js')
 
 
 async function register(page) {
@@ -11,7 +11,7 @@ async function register(page) {
                     let iv = res.iv;
                     let encryptedData = res.encryptedData;
                     // 下面开始调用注册接口
-                    WXAPI.register_complex({
+                    KM.register_complex({
                         code: code,
                         encryptedData: encryptedData,
                         iv: iv,
@@ -51,4 +51,8 @@ async function login(page) {
             })
         }
     })
+}
+
+module.exports={
+    register:register
 }
