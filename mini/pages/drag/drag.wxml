@@ -1,0 +1,43 @@
+<page-meta scroll-top="{{pageMetaScrollTop}}" />
+<drag
+ id="drag"
+ bind:click="itemClick"
+ bind:change="change"
+ bind:sortend="sortEnd"
+ bind:scroll="scroll"
+ list-data="{{items}}"
+ columns="{{size}}"
+ scroll-top="{{scrollTop}}"
+ top-size="240"
+ bottom-size="{{isIphoneX ? 380 : 300 }}"
+/>
+<view class="empty-bottom {{isIphoneX ? 'isX' : ''}}" />
+
+<view
+ class="item {{cur == index ? 'cur':''}} {{curZ == index ? 'zIndex':''}} {{itemTransition && index !== cur ? 'itemTransition':''}} {{item.fixed ? 'fixed' : ''}}"
+ wx:for="{{todos}}"
+ wx:key="id"
+ data-key="{{item.sortKey}}"
+ data-detail="{{item}}"
+ data-index="{{index}}"
+ style="transform: translate3d({{index === cur ? tranX + 'px' : item.tranX}}, {{index === cur ? tranY + 'px' : item.tranY}}, 0);width: 100"
+ bindtap="todoClick"
+>
+	<view class="cell">
+		<view class="cell__hd">
+		</view>
+		<view class="cell__bd">
+			<view class="name">{{item.title}}</view>
+			<view class="des">{{item.description}}</view>
+		</view>
+			<view class="cell__des">
+				<view class="consumed">
+					{{item.planConsumed}}m
+				</view>
+			</view>
+	</view>
+
+</view>
+<view class="btn_view">
+	<a bindtap="createSchedule" class="weui-btn weui-btn_primary">页面主操作</a>
+</view>
