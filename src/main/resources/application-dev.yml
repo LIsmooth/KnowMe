@@ -9,4 +9,7 @@ spring:
     password: 650728
     driver-class-name: com.mysql.cj.jdbc.Driver
 jwt:
-  secret: javainuse;
+  secret: javainuse
+km:
+  wx-app-id: wxappid
+  wx-secret: wxsecret

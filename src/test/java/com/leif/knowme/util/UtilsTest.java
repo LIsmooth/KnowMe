@@ -1,8 +1,8 @@
 package com.leif.knowme.util;
 
+import com.leif.knowme.pojo.HttpClientResult;
 import org.junit.Test;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class UtilsTest {
@@ -21,5 +21,11 @@ public class UtilsTest {
         Map<String,Object> s=CryptUtil.wxDecodeUserInfo(encryptedData,sessionKey,iv);
         Map<String,Object> water= (Map<String, Object>) s.get("watermark");
         assert water.get("appid").toString().equals(appId);
+    }
+
+    @Test
+    public void testHttpUtilsGetMethod() throws Exception {
+        HttpClientResult result= HttpUtils.doGet("https://www.baidu.com/",null);
+        assert result.getCode()==200;
     }
 }

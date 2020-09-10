@@ -5,12 +5,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.leif.knowme.api.response.ScheduleResponse;
 import com.leif.knowme.base.BaseContext;
-import com.leif.knowme.dto.mapper.ScheduleDtoMr;
-import com.leif.knowme.exception.AppException;
+import com.leif.knowme.config.KmProperties;
 import com.leif.knowme.dto.AccountDto;
 import com.leif.knowme.dto.ScheduleDto;
 import com.leif.knowme.dto.TodoDto;
 import com.leif.knowme.dto.UserDto;
+import com.leif.knowme.dto.mapper.ScheduleDtoMr;
+import com.leif.knowme.exception.AppException;
 import com.leif.knowme.service.AccountService;
 import com.leif.knowme.service.ScheduleService;
 import com.leif.knowme.service.TodoService;
@@ -19,17 +20,16 @@ import com.leif.knowme.util.JwtUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mybatis.generator.api.MyBatisGenerator;
-import org.mybatis.generator.config.Configuration;
-import org.mybatis.generator.config.xml.ConfigurationParser;
-import org.mybatis.generator.internal.DefaultShellCallback;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.File;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RunWith(SpringRunner.class)
@@ -48,6 +48,8 @@ public class KnowmeApplicationTests {
     JdbcTemplate jdbcTemplate;
     @Autowired
     JwtUtils jwtUtils;
+    @Autowired
+    KmProperties kmProperties;
 
 
     @Before
@@ -123,6 +125,12 @@ public class KnowmeApplicationTests {
         String accountId2 = jwtUtils.getUsernameFromToken(token);
         assert accountId.equals(accountId2);
         System.out.println(accountId2);
+    }
+
+    @Test
+    public void testConfig(){
+        assert kmProperties.getWxAppId()!=null;
+        System.out.println(kmProperties.getWxAppId());
     }
 
 /*    public static void main(String[] args) throws Exception {

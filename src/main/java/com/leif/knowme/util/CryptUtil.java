@@ -2,7 +2,7 @@ package com.leif.knowme.util;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+import org.apache.commons.codec.binary.Base64;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import javax.crypto.Cipher;
@@ -46,11 +46,11 @@ public class CryptUtil {
 
     public static Map<String,Object> wxDecodeUserInfo(String encryptedData, String sessionKey, String iv){
         // 被加密的数据
-        byte[] dataByte = Base64.decode(encryptedData);
+        byte[] dataByte = Base64.decodeBase64(encryptedData);
         // 加密秘钥
-        byte[] keyByte = Base64.decode(sessionKey);
+        byte[] keyByte = Base64.decodeBase64(sessionKey);
         // 偏移量
-        byte[] ivByte = Base64.decode(iv);
+        byte[] ivByte = Base64.decodeBase64(iv);
 
         try {
             // 如果密钥不足16位，那么就补足.  这个if 中的内容很重要
