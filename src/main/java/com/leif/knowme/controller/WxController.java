@@ -1,6 +1,7 @@
 package com.leif.knowme.controller;
 
 import com.leif.knowme.exception.AppException;
+import com.leif.knowme.pojo.WxUserInfo;
 import com.leif.knowme.service.AccountService;
 import com.leif.knowme.service.WxService;
 import com.leif.knowme.util.CryptUtil;
@@ -29,8 +30,7 @@ public class WxController {
         String iv = params.get("iv");
 
         String sessionKey = wxService.wxLogin(code);
-        Map<String, Object> userInfo=CryptUtil.wxDecodeUserInfo(encryptedData,sessionKey,iv);
-        userInfo.forEach((k, v) -> System.out.println(k + ": " + v));
+        WxUserInfo userInfo=CryptUtil.wxDecodeUserInfo(encryptedData,sessionKey,iv);
     }
 
     @GetMapping(value="/login/{code}")

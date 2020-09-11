@@ -47,13 +47,13 @@ public interface AccountMapper {
      */
     @Insert({
         "insert into t_account (account_id, account_no, ",
-        "account_name, password, ",
-        "user_id, status, ",
-        "created)",
+        "account_name, `password`, ",
+        "user_id, wx_open_id, ",
+        "`status`, created)",
         "values (#{accountId,jdbcType=VARCHAR}, #{accountNo,jdbcType=VARCHAR}, ",
         "#{accountName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, ",
-        "#{userId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, ",
-        "#{created,jdbcType=TIMESTAMP})"
+        "#{userId,jdbcType=VARCHAR}, #{wxOpenId,jdbcType=VARCHAR}, ",
+        "#{status,jdbcType=INTEGER}, #{created,jdbcType=TIMESTAMP})"
     })
     int insert(Account record);
 
@@ -81,7 +81,8 @@ public interface AccountMapper {
      */
     @Select({
         "select",
-        "account_id, account_no, account_name, password, user_id, status, created",
+        "account_id, account_no, account_name, `password`, user_id, wx_open_id, `status`, ",
+        "created",
         "from t_account",
         "where account_id = #{accountId,jdbcType=VARCHAR}"
     })
@@ -122,9 +123,10 @@ public interface AccountMapper {
         "update t_account",
         "set account_no = #{accountNo,jdbcType=VARCHAR},",
           "account_name = #{accountName,jdbcType=VARCHAR},",
-          "password = #{password,jdbcType=VARCHAR},",
+          "`password` = #{password,jdbcType=VARCHAR},",
           "user_id = #{userId,jdbcType=VARCHAR},",
-          "status = #{status,jdbcType=INTEGER},",
+          "wx_open_id = #{wxOpenId,jdbcType=VARCHAR},",
+          "`status` = #{status,jdbcType=INTEGER},",
           "created = #{created,jdbcType=TIMESTAMP}",
         "where account_id = #{accountId,jdbcType=VARCHAR}"
     })

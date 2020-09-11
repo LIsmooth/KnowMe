@@ -2,6 +2,7 @@ package com.leif.knowme.util;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.leif.knowme.pojo.WxUserInfo;
 import org.apache.commons.codec.binary.Base64;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
@@ -44,7 +45,7 @@ public class CryptUtil {
         return hexString.toString();
     }
 
-    public static Map<String,Object> wxDecodeUserInfo(String encryptedData, String sessionKey, String iv){
+    public static WxUserInfo wxDecodeUserInfo(String encryptedData, String sessionKey, String iv){
         // 被加密的数据
         byte[] dataByte = Base64.decodeBase64(encryptedData);
         // 加密秘钥
@@ -72,7 +73,7 @@ public class CryptUtil {
             byte[] resultByte = cipher.doFinal(dataByte);
             if (null != resultByte && resultByte.length > 0) {
                 String result = new String(resultByte, StandardCharsets.UTF_8);
-                return new ObjectMapper().readValue(result,new TypeReference<Map<String,Object>>(){});
+                return new ObjectMapper().readValue(result,WxUserInfo.class);
             }
         } catch (Exception e) {
             e.printStackTrace();

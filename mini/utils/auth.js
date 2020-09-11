@@ -16,7 +16,7 @@ async function register(page) {
                         encryptedData: encryptedData,
                         iv: iv,
                     }).then(function (res) {
-                        console.log('this is register then');
+                        console.log('this is register then',res);
                     })
                 }
             })
