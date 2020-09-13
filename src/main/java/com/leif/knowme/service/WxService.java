@@ -3,6 +3,7 @@ package com.leif.knowme.service;
 import com.leif.knowme.exception.AppException;
 import com.leif.knowme.outer.WechatApi;
 import com.leif.knowme.outer.response.WxLoginResponse;
+import com.leif.knowme.repository.WxRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 public class WxService {
     @Autowired
     WechatApi wechatApi;
+    @Autowired
+    WxRepository wxRepository;
 
     public String wxLogin(String code) throws AppException {
         WxLoginResponse response = wechatApi.login(code);
