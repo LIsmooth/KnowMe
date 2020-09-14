@@ -3,7 +3,7 @@ package com.leif.knowme.outer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.leif.knowme.config.KmProperties;
 import com.leif.knowme.exception.AppException;
-import com.leif.knowme.outer.response.WxLoginResponse;
+import com.leif.knowme.outer.response.WxLoginRes;
 import com.leif.knowme.pojo.HttpClientResult;
 import com.leif.knowme.util.HttpUtils;
 import org.apache.http.HttpStatus;
@@ -20,7 +20,7 @@ public class WechatApi {
     @Autowired
     KmProperties kmProperties;
 
-    public WxLoginResponse login(String code) throws AppException {
+    public WxLoginRes login(String code) throws AppException {
         String requestUrl = "https://api.weixin.qq.com/sns/jscode2session";
         Map<String, String> params = new HashMap<>(4);
         params.put("appid", kmProperties.getWxAppId());
@@ -37,10 +37,10 @@ public class WechatApi {
         }
     }
 
-    private WxLoginResponse convertToWxLoginResponse(HttpClientResult result) throws IOException, AppException {
+    private WxLoginRes convertToWxLoginResponse(HttpClientResult result) throws IOException, AppException {
         if (result.getCode() == HttpStatus.SC_OK) {
             ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.readValue(result.getContent(), WxLoginResponse.class);
+            return objectMapper.readValue(result.getContent(), WxLoginRes.class);
         } else {
             throw new AppException(result.getContent());
         }
