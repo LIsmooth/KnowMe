@@ -1,10 +1,12 @@
 package com.leif.knowme.controller;
 
 import com.leif.knowme.exception.AppException;
+import com.leif.knowme.pojo.WxUserAccount;
 import com.leif.knowme.pojo.WxUserInfo;
 import com.leif.knowme.service.AccountService;
 import com.leif.knowme.service.WxService;
 import com.leif.knowme.util.CryptUtil;
+import com.leif.knowme.util.JwtUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,23 +26,24 @@ public class WxController {
     AccountService accountService;
     @Autowired
     WxService wxService;
+    @Autowired
+    JwtUtils jwtUtils;
+
     Logger logger = LoggerFactory.getLogger(getClass());
 
     @PostMapping(value = "/register", headers = "Accept=application/json")
-    public void wxRegister(@RequestBody Map<String,String> params) throws AppException {
+    public void wxRegister(@RequestBody Map<String, String> params) throws AppException {
         String code = params.get("code");
-        String encryptedData=params.get("encryptedData");
+        String encryptedData = params.get("encryptedData");
         String iv = params.get("iv");
 
-        String sessionKey = wxService.wxLogin(code);
-        WxUserInfo userInfo=CryptUtil.wxDecodeUserInfo(encryptedData,sessionKey,iv);
+        WxUserAccount wxUserAccount = wxService.wxLogin(code);
+        WxUserInfo userInfo = CryptUtil.wxDecodeUserInfo(encryptedData, wxUserAccount.getSessionKey(), iv);
     }
 
-    @GetMapping(value="/login/{code}")
-    public void wxLogin(@PathVariable String code){
-        logger.trace("trace log");
-        logger.debug("debug log");
-        logger.warn("warn log");
-        logger.error("error",new AppException("this is an Exception"));
+    @GetMapping(value = "/login/{code}")
+    public String wxLogin(@PathVariable String code) throws AppException {
+        WxUserAccount wxUserAccount = wxService.wxLogin(code);
+        return jwtUtils.doGenerateToken(wxUserAccount.getAccountId());
     }
 }

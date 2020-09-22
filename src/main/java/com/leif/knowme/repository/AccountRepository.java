@@ -18,12 +18,18 @@ public class AccountRepository {
     @Autowired
     AccountMapper accountMapper;
 
-    public String createAccount(AccountDto accountDto) {
+    public AccountDto createAccount(AccountDto accountDto) {
         Account account = extractAccount(accountDto);
         account.setAccountId(UUIDUtils.generateUUID());
         account.setPassword(CryptUtil.cryptByMD5(account.getPassword()));
         accountMapper.insertSelective(account);
-        return account.getAccountId();
+        return convertToAccountDTO(account);
+    }
+
+    private AccountDto convertToAccountDTO(Account account) {
+        AccountDto accountDto=new AccountDto();
+        BeanUtils.copyProperties(account,accountDto,"created");
+        return accountDto;
     }
 
     private Account extractAccount(AccountDto accountDto) {

@@ -6,6 +6,9 @@ spring:
   http:
     encoding:
       charset: UTF-8
+  output:
+    ansi:
+      enabled: detect
 mybatis:
   mapper-locations: classpath:mybatis/mapper/*.xml
   type-aliases-package: com.leif.knowme.model

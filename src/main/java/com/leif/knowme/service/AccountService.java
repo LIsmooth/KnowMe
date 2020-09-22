@@ -15,7 +15,7 @@ public class AccountService {
     AccountRepository accountRepo;
 
     public String createAccount(AccountDto accountDto) {
-        return accountRepo.createAccount(accountDto);
+        return accountRepo.createAccount(accountDto).getAccountId();
     }
 
     public boolean checkIsAccountNoExist(String accountNo) {

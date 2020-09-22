@@ -31,7 +31,11 @@ public class WechatApi {
         HttpClientResult result;
         try {
             result = HttpUtils.doGet(requestUrl, params);
-            return convertToWxLoginResponse(result);
+            WxLoginRes wxLoginInfo = convertToWxLoginResponse(result);
+            if (wxLoginInfo.getErrcode() != WxLoginRes.ERRCODE_SUCC) {
+                throw new AppException("Wechat login error");
+            }
+            return wxLoginInfo;
         } catch (IOException | URISyntaxException e) {
             throw new AppException(e.getMessage());
         }

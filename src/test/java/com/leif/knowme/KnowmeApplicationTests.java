@@ -126,7 +126,7 @@ public class KnowmeApplicationTests {
     @Test
     public void tokenTest(){
         String accountId="HelloLeif";
-        String token = jwtUtils.doGenerateToken(new HashMap<>(0),accountId);
+        String token = jwtUtils.doGenerateToken(accountId);
         System.out.println(token);
         String accountId2 = jwtUtils.getUsernameFromToken(token);
         assert accountId.equals(accountId2);

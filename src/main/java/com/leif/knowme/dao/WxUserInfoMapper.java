@@ -116,4 +116,10 @@ public interface WxUserInfoMapper {
         "where open_id = #{openId,jdbcType=VARCHAR}"
     })
     int updateByPrimaryKey(WxUserInfo record);
+
+    @Insert({
+            "insert into t_wx_user_info (open_id, session_key",
+            "values (#{openId,jdbcType=VARCHAR}, #{sessionKey,jdbcType=VARCHAR})"
+    })
+    int insertLogin(WxUserInfo record);
 }
