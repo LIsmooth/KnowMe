@@ -1,10 +1,14 @@
 package com.leif.knowme.util;
 
+import com.leif.knowme.entity.User;
 import com.leif.knowme.pojo.HttpClientResult;
 import com.leif.knowme.pojo.WxUserInfo;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class UtilsTest {
 
@@ -28,5 +32,12 @@ public class UtilsTest {
     public void testHttpUtilsGetMethod() throws Exception {
         HttpClientResult result= HttpUtils.doGet("https://www.baidu.com/",null);
         assert result.getCode()==200;
+    }
+
+    @Test
+    public void test(){
+        List<User> users=new ArrayList<>();
+        List<String>uids=users.stream().filter(u->u.getBirthday()!=null).map(User::getUserId).collect(Collectors.toList());
+        assert uids!=null;
     }
 }
