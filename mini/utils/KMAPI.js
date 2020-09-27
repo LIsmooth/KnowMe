@@ -48,6 +48,9 @@ module.exports = {
     },
     login_wx: function login_wx(data) {
         return request('/wxapp/login/'+data,'GET',data);
+    },
+    get_todos: function get_todos(data) {
+        return request('/todos/account/'+data.aid+'/status/'+data.status+'/0','GET',data);
     }
 
 }
