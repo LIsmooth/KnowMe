@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
-@RestController()
+@RestController
 @RequestMapping("wxapp")
 public class WxController {
     @Autowired
@@ -44,6 +44,6 @@ public class WxController {
     @GetMapping(value = "/login/{code}")
     public String wxLogin(@PathVariable String code) throws AppException {
         WxUserAccount wxUserAccount = wxService.wxLogin(code);
-        return jwtUtils.doGenerateToken(wxUserAccount.getAccountId());
+        return wxUserAccount.getAccountId();
     }
 }

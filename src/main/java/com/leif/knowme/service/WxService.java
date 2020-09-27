@@ -10,6 +10,7 @@ import com.leif.knowme.repository.WxRepository;
 import com.leif.knowme.util.UUIDUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class WxService {
@@ -20,17 +21,21 @@ public class WxService {
     @Autowired
     AccountRepository accountRepository;
 
+    @Transactional(rollbackFor = Exception.class)
     public WxUserAccount wxLogin(String code) throws AppException {
         WxLoginRes wxLoginInfo = wechatApi.login(code);
-        wxRepository.saveLogin(wxLoginInfo);
-        AccountDto accountDto = createAccountByWxLogin(wxLoginInfo);
-        return new WxUserAccount(wxLoginInfo.getOpenid(), wxLoginInfo.getSessionKey(), accountDto.getAccountId());
+        String accountId = accountRepository.getAccountIdByAccountNo(wxLoginInfo.getOpenid());
+        if(accountId==null) {
+            wxRepository.saveLogin(wxLoginInfo);
+            accountId = createAccountByWxLogin(wxLoginInfo);
+        }
+        return new WxUserAccount(wxLoginInfo.getOpenid(), wxLoginInfo.getSessionKey(), accountId);
     }
 
-    private AccountDto createAccountByWxLogin(WxLoginRes wxLoginInfo) {
+    private String createAccountByWxLogin(WxLoginRes wxLoginInfo) {
         AccountDto accountDto = new AccountDto();
         accountDto.setAccountName(UUIDUtils.generateUUID().substring(5));
         accountDto.setAccountNo(wxLoginInfo.getOpenid());
-        return accountRepository.createAccount(accountDto);
+        return accountRepository.createAccount(accountDto).getAccountId();
     }
 }

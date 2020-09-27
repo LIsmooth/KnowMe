@@ -1,8 +1,8 @@
 package com.leif.knowme.repository;
 
 import com.leif.knowme.dao.AccountMapper;
-import com.leif.knowme.entity.Account;
 import com.leif.knowme.dto.AccountDto;
+import com.leif.knowme.entity.Account;
 import com.leif.knowme.util.CryptUtil;
 import com.leif.knowme.util.UUIDUtils;
 import org.springframework.beans.BeanUtils;
@@ -39,6 +39,10 @@ public class AccountRepository {
     }
 
     public boolean checkIsAccountNoExist(String accountNo) {
-        return accountMapper.checkIsAccountNoExist(accountNo);
+        return accountMapper.getAccountIdByAccountNo(accountNo)!=null;
+    }
+
+    public String getAccountIdByAccountNo(String accountNo) {
+        return accountMapper.getAccountIdByAccountNo(accountNo);
     }
 }

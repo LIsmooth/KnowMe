@@ -25,7 +25,7 @@ public class CryptUtil {
 
     public static String cryptByMD5(String str) {
         if (str == null || str.length() == 0) {
-            throw new IllegalArgumentException("String to encrypted cannot be null or zero length");
+            return null;
         }
         StringBuilder hexString = new StringBuilder();
         try {
