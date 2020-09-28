@@ -34,7 +34,7 @@ public class ResponseWrapperAdvisor implements ResponseBodyAdvice<Object> {
                 return convertToJsonString(kmResponse);
             } catch (JsonProcessingException e) {
                 logger.error("convertToJsonString error\n", e);
-                return KmResponse.buildErrorResponse(KmResponse.KM_RESPONSE_CODE_TRANSFER_ERR, e.getMessage());
+                return new KmResponse(KmResponse.KM_RESPONSE_CODE_ERR_TRANSFER, e.getMessage()).err2Json();
             }
         }
         return kmResponse;

@@ -1,8 +1,12 @@
 App({
     globalData: {
-        aid: ''
+        token: ''
     },
     onLaunch: function () {
-        this.globalData.aid = wx.getStorageSync("aid");
+        var timestamp = new Date().getTime();
+        var expiration = wx.getStorageSync("expiration");
+        if (expiration && expiration > timestamp) {
+            this.globalData.token = wx.getStorageSync("token");
+        }
     }
 })

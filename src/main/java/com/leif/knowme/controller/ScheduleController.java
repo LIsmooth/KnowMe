@@ -14,6 +14,7 @@ import com.leif.knowme.factory.ScheduleFactory;
 import com.leif.knowme.service.AuthService;
 import com.leif.knowme.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,7 +45,7 @@ public class ScheduleController {
         return new SchedulePreviewResponse(scheduleDto);
     }
 
-    @RequestMapping(value="/latest")
+    @GetMapping(value="/latest")
     public ScheduleResponse getLatestSchedule(@RequestParam("token") String token){
         String accountId = authService.getAccountIdFromToken(token);
         ScheduleDto scheduleDto=scheduleService.getLatestSchedule(accountId);

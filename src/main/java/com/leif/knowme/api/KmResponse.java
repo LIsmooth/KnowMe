@@ -7,8 +7,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public class KmResponse {
 
     public static final int KM_RESPONSE_CODE_SUCC = 0;
-    public static final int KM_RESPONSE_CODE_SYSTEM_ERR = 5000;
-    public static final int KM_RESPONSE_CODE_TRANSFER_ERR = 10000;
+    public static final int KM_RESPONSE_CODE_ERR_SYSTEM = 100;
+    public static final int KM_RESPONSE_CODE_ERR_TRANSFER = 1000;
+    public static final int KM_RESPONSE_CODE_ERR_AUTH_EXPIRED = 2000;
 
 
     private int code;
@@ -22,8 +23,10 @@ public class KmResponse {
         this.timestamp = System.currentTimeMillis();
     }
 
-    public static String buildErrorResponse(int code, String message) {
-        return String.format("{code:%d,errorMsg:'%s',timestamp:%d}", code, message, System.currentTimeMillis());
+    public KmResponse(int code, String errorMsg) {
+        this.code = code;
+        this.errorMsg = errorMsg;
+        this.timestamp = System.currentTimeMillis();
     }
 
     public int getCode() {
@@ -58,13 +61,7 @@ public class KmResponse {
         this.timestamp = timestamp;
     }
 
-    @Override
-    public String toString() {
-        return "KmResponse{" +
-                "code=" + code +
-                ", data=" + data +
-                ", errorMsg='" + errorMsg + '\'' +
-                ", timestamp=" + timestamp +
-                '}';
+    public String err2Json() {
+        return String.format("{code:%d,errorMsg:'%s',timestamp:%d}", code, errorMsg, System.currentTimeMillis());
     }
 }

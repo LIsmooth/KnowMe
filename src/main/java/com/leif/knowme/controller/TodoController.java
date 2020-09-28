@@ -5,8 +5,10 @@ import com.leif.knowme.api.response.GetAccountAllTodoResponse;
 import com.leif.knowme.base.BaseContext;
 import com.leif.knowme.api.KmRequest;
 import com.leif.knowme.dto.TodoDto;
+import com.leif.knowme.exception.AuthException;
 import com.leif.knowme.service.AuthService;
 import com.leif.knowme.service.TodoService;
+import com.leif.knowme.util.JwtUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,6 +32,8 @@ public class TodoController {
     TodoService todoService;
     @Autowired
     AuthService authService;
+    @Autowired
+    JwtUtils jwtUtils;
 
     @PostMapping(headers = "Accept=application/json")
     public String createTodo(@RequestBody KmRequest<CreateTodoRequest> request) {
@@ -53,10 +57,11 @@ public class TodoController {
         return 0;//TODO updateTodo
     }
 
-    @GetMapping("/account/{accountId}/status/{status}/{pageNo}")
-    public GetAccountAllTodoResponse getAccountAllTodos(@PathVariable String accountId,
-                                                        @PathVariable String status,
-                                                        @PathVariable int pageNo) {
+    @GetMapping("/status/{status}/{pageNo}/{token}")
+    public GetAccountAllTodoResponse getAccountAllTodos(
+            @PathVariable String status,
+            @PathVariable int pageNo, @PathVariable String token) throws AuthException {
+        String accountId = jwtUtils.getUsernameFromToken(token);
         List<TodoDto> todos = todoService
                 .getAccountAllTodos(accountId,
                         Arrays.stream(status.split("_")).mapToInt(Integer::valueOf).boxed().collect(

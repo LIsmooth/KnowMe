@@ -12,13 +12,27 @@ async function login() {
                     })
                     return;
                 }
-                getApp().globalData.aid = res.data;
-                wx.setStorageSync('aid', res.data);
+                getApp().globalData.token = res.data.token;
+                wx.setStorageSync('token', res.data.token);
+                wx.setStorageSync('expiration', res.data.expiration);
             })
         }
     })
 }
+function passCodeFilter(res){
+    if(res.code === 2000) {
+        wx.removeStorageSync('token');
+        wx.showModal({
+            title: '无法登录',
+            content: res.errorMsg + ' 请重新进入小程序',
+            showCancel: false
+        })
+        return false;
+    }
+    return true;
+}
 
 module.exports = {
-    login: login
+    login: login,
+    passCodeFilter: passCodeFilter
 }

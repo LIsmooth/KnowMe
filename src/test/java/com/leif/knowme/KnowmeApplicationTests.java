@@ -12,6 +12,7 @@ import com.leif.knowme.dto.TodoDto;
 import com.leif.knowme.dto.UserDto;
 import com.leif.knowme.dto.mapper.ScheduleDtoMr;
 import com.leif.knowme.exception.AppException;
+import com.leif.knowme.exception.AuthException;
 import com.leif.knowme.service.AccountService;
 import com.leif.knowme.service.ScheduleService;
 import com.leif.knowme.service.TodoService;
@@ -126,12 +127,23 @@ public class KnowmeApplicationTests {
     }
 
     @Test
-    public void tokenTest() {
+    public void tokenTest() throws InterruptedException {
         String accountId = "HelloLeif";
-        String token = jwtUtils.doGenerateToken(accountId);
+        String token = jwtUtils.doGenerateToken(accountId,2).get("token").toString();
         System.out.println(token);
-        String accountId2 = jwtUtils.getUsernameFromToken(token);
+        String accountId2 = null;
+        try {
+            accountId2 = jwtUtils.getUsernameFromToken(token);
+        } catch (AuthException e) {
+            assert false;
+        }
         assert accountId.equals(accountId2);
+        Thread.sleep(3000L);
+        try {
+            accountId2 = jwtUtils.getUsernameFromToken(token);
+        } catch (AuthException e) {
+            assert e.getMessage().contains("token has expired");
+        }
         System.out.println(accountId2);
     }
 

@@ -1,4 +1,5 @@
 const KM = require('../../utils/KMAPI.js');
+const AUTH = require('../../utils/auth');
 const app = getApp()
 
 Page({
@@ -81,26 +82,21 @@ Page({
     },
     onPullDownRefresh: function () {
         this.setData({
-            items:[]
+            items: []
         })
         this.onLoad();
         wx.stopPullDownRefresh()
     },
     onLoad() {
         this.drag = this.selectComponent('#drag');
-        let params = {aid: app.globalData.aid, status: 0};
-        let _this = this
+        let params = {token: app.globalData.token, status: 0};
+        let _this = this;
         KM.get_todos(params).then(function (res) {
-            if (res.code !== 0) {
-                wx.showModal({
-                    title: '无法登录',
-                    content: res.errorMsg,
-                    showCancel: false
-                })
+            if (AUTH.passCodeFilter(res)) {
+                _this.setData({
+                    todos: res.data.todos
+                });
             }
-            _this.setData({
-                todos: res.data.todos
-            });
         });
         this.drag.init();
     }

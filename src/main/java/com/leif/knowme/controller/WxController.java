@@ -42,8 +42,8 @@ public class WxController {
     }
 
     @GetMapping(value = "/login/{code}")
-    public String wxLogin(@PathVariable String code) throws AppException {
+    public Map<String,Object> wxLogin(@PathVariable String code) throws AppException {
         WxUserAccount wxUserAccount = wxService.wxLogin(code);
-        return wxUserAccount.getAccountId();
+        return jwtUtils.doGenerateToken(wxUserAccount.getAccountId());
     }
 }

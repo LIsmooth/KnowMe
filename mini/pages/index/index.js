@@ -8,7 +8,7 @@ Page({
     data: {},
 
     onLoad: function (options) {
-        if (!app.globalData.aid) {
+        if (!app.globalData.token) {
           AUTH.login();
         }
     },
@@ -28,7 +28,7 @@ Page({
 
     /**
      * 生命周期函数--监听页面隐藏
-     */
+     */ 
     onHide: function () {
 
     },
