@@ -1,5 +1,7 @@
 package com.leif.knowme.base;
 
+import com.leif.knowme.api.KmRequest;
+
 public class BaseContext {
     String accountId;
 

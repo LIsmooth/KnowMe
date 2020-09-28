@@ -2,7 +2,7 @@ package com.leif.knowme.factory;
 
 
 import com.leif.knowme.api.request.CreateScheduleRequest;
-import com.leif.knowme.base.KmRequest;
+import com.leif.knowme.api.KmRequest;
 import com.leif.knowme.exception.AppException;
 import com.leif.knowme.dto.ScheduleItemDto;
 import com.leif.knowme.dto.ScheduleDto;

@@ -5,7 +5,7 @@ import com.leif.knowme.api.request.SchedulePreviewRequest;
 import com.leif.knowme.api.response.SchedulePreviewResponse;
 import com.leif.knowme.api.response.ScheduleResponse;
 import com.leif.knowme.base.BaseContext;
-import com.leif.knowme.base.KmRequest;
+import com.leif.knowme.api.KmRequest;
 import com.leif.knowme.dto.ScheduleDto;
 import com.leif.knowme.dto.mapper.ScheduleDtoMr;
 import com.leif.knowme.exception.AppException;

@@ -1,7 +1,7 @@
 package com.leif.knowme.controller;
 
 import com.leif.knowme.api.request.CreateUserRequest;
-import com.leif.knowme.base.KmRequest;
+import com.leif.knowme.api.KmRequest;
 import com.leif.knowme.dto.UserDto;
 import com.leif.knowme.service.UserService;
 import org.springframework.beans.BeanUtils;

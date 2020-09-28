@@ -1,8 +1,9 @@
 package com.leif.knowme.controller;
 
 import com.leif.knowme.api.request.CreateTodoRequest;
+import com.leif.knowme.api.response.GetAccountAllTodoResponse;
 import com.leif.knowme.base.BaseContext;
-import com.leif.knowme.base.KmRequest;
+import com.leif.knowme.api.KmRequest;
 import com.leif.knowme.dto.TodoDto;
 import com.leif.knowme.service.AuthService;
 import com.leif.knowme.service.TodoService;
@@ -53,14 +54,15 @@ public class TodoController {
     }
 
     @GetMapping("/account/{accountId}/status/{status}/{pageNo}")
-    public List<TodoDto> getAccountAllTodos(@PathVariable String accountId,
-                                            @PathVariable String status,
-                                            @PathVariable int pageNo) {
-        return todoService
+    public GetAccountAllTodoResponse getAccountAllTodos(@PathVariable String accountId,
+                                                        @PathVariable String status,
+                                                        @PathVariable int pageNo) {
+        List<TodoDto> todos = todoService
                 .getAccountAllTodos(accountId,
-                        Arrays.stream(status.split("-")).mapToInt(Integer::valueOf).boxed().collect(
+                        Arrays.stream(status.split("_")).mapToInt(Integer::valueOf).boxed().collect(
                                 Collectors.toList()),
                         pageNo);
+        return new GetAccountAllTodoResponse(todos);
     }
 
 /*

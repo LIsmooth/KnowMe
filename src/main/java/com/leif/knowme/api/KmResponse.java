@@ -1,4 +1,4 @@
-package com.leif.knowme.base;
+package com.leif.knowme.api;
 
 public class KmResponse {
 

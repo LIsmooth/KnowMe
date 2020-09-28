@@ -10,7 +10,7 @@ public class TodoDto {
     String todoId;
     String accountId;
     Integer planConsumed;
-    Integer type;
+    Byte type;
     String eventMsg;
     Integer status;
 
@@ -24,11 +24,11 @@ public class TodoDto {
         this.status = status;
     }
 
-    public Integer getType() {
+    public Byte getType() {
         return type;
     }
 
-    public void setType(Integer type) {
+    public void setType(Byte type) {
         this.type = type;
     }
 
