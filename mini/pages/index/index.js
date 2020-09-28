@@ -1,4 +1,5 @@
 const AUTH = require('../../utils/auth');
+
 var app = getApp();
 
 Page({
@@ -9,7 +10,6 @@ Page({
     onLoad: function (options) {
         if (!app.globalData.aid) {
           AUTH.login();
-          console.log(app.globalData.aid);
         }
     },
     /**

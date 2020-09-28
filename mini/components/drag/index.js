@@ -338,7 +338,7 @@ Component({
 			this.setData({itemTransition: false});
 
 			let delItem = (item) => ({
-				id: item.dragId,
+				id: item.todoId,
 				slot: item.slot,
 				fixed: item.fixed,
 				tranX: "0%",

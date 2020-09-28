@@ -14,7 +14,7 @@
 <view class="empty-bottom {{isIphoneX ? 'isX' : ''}}" />
 
 <view
- class="item {{cur == index ? 'cur':''}} {{curZ == index ? 'zIndex':''}} {{itemTransition && index !== cur ? 'itemTransition':''}} {{item.fixed ? 'fixed' : ''}}"
+ class="item {{cur === index ? 'cur':''}} {{curZ === index ? 'zIndex':''}} {{itemTransition && index !== cur ? 'itemTransition':''}} {{item.fixed ? 'fixed' : ''}}"
  wx:for="{{todos}}"
  wx:key="id"
  data-key="{{item.sortKey}}"
@@ -27,8 +27,8 @@
 		<view class="cell__hd">
 		</view>
 		<view class="cell__bd">
-			<view class="name">{{item.title}}</view>
-			<view class="des">{{item.description}}</view>
+			<view class="name">{{item.eventMsg}}</view>
+			<view class="des">{{item.eventMsg}}</view>
 		</view>
 			<view class="cell__des">
 				<view class="consumed">

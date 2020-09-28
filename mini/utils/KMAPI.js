@@ -47,10 +47,10 @@ module.exports = {
         return request('/wxapp/register', 'POST', data);
     },
     login_wx: function login_wx(data) {
-        return request('/wxapp/login/'+data,'GET',data);
+        return request('/wxapp/login/'+data,'GET',null);
     },
     get_todos: function get_todos(data) {
-        return request('/todos/account/'+data.aid+'/status/'+data.status+'/0','GET',data);
+        return request('/todos/account/'+data.aid+'/status/'+data.status+'/0','GET',null);
     }
 
 }
