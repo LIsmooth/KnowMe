@@ -59,9 +59,8 @@ public class KnowmeApplicationTests {
 
 
     @Before
-    public void deleteTables()
-    {
-        String [] deletes={
+    public void deleteTables() {
+        String[] deletes = {
                 "DELETE FROM t_user",
                 "DELETE FROM t_todo",
                 "DELETE FROM t_account",
@@ -99,33 +98,36 @@ public class KnowmeApplicationTests {
         assert todoDtos.size() == 2;
         assert todoDtos.get(0).getEventMsg().equals(eventMsg);
 
-        ScheduleDto dto=new ScheduleDto(accountId,"Test schedule","this is note",new Date(),new Date(new Date().getTime()+3000));
-        assert scheduleService.createSchedule(dto,Arrays.asList(todoId,todoId2))==2;
+        ScheduleDto dto = new ScheduleDto(accountId, "Test schedule", "this is note", new Date(), new Date(new Date().getTime() + 3000));
+        assert scheduleService.createSchedule(dto, Arrays.asList(todoId, todoId2)) == 2;
 
         BaseContext context = new BaseContext();
         context.setAccountId(accountId);
-        ScheduleDto scheduleDto =scheduleService.previewSchedule(context, new Date(),
+        ScheduleDto scheduleDto = scheduleService.previewSchedule(context, new Date(),
                 todoDtos.stream().map(TodoDto::getTodoId).collect(Collectors.toList()));
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String json = ow.writeValueAsString(scheduleDto);
         System.out.println(json);
 
         scheduleDto = scheduleService.getLatestSchedule(accountId);
-        ScheduleResponse response=ScheduleDtoMr.INSTANCE.scheduleDto2ScheduleResponse(scheduleDto);
+        ScheduleResponse response = ScheduleDtoMr.INSTANCE.scheduleDto2ScheduleResponse(scheduleDto);
         json = ow.writeValueAsString(response);
         System.out.println(json);
 
         context.setAccountId(accountId);
         assert todoService.deleteByTodoId(context, todoId) == 1;
-        assert todoService.getAccountAllTodos(accountId, status, 0).size() == 1;
+        List<TodoDto> accountAllTodos = todoService.getAccountAllTodos(accountId, status, 0);
+        assert accountAllTodos.size() == 1;
+        TodoDto dto1 = accountAllTodos.get(0);
+        assert dto1.getType() == 0;
         assert todoService.deleteAllByAccountId(accountId) == 2;
-        assert todoService.getAccountAllTodos(accountId, status, 0)==null;
+        assert todoService.getAccountAllTodos(accountId, status, 0) == null;
 
     }
 
     @Test
-    public void tokenTest(){
-        String accountId="HelloLeif";
+    public void tokenTest() {
+        String accountId = "HelloLeif";
         String token = jwtUtils.doGenerateToken(accountId);
         System.out.println(token);
         String accountId2 = jwtUtils.getUsernameFromToken(token);
@@ -134,8 +136,8 @@ public class KnowmeApplicationTests {
     }
 
     @Test
-    public void testConfig(){
-        assert kmProperties.getWxAppId()!=null;
+    public void testConfig() {
+        assert kmProperties.getWxAppId() != null;
         System.out.println(kmProperties.getWxAppId());
     }
 
@@ -146,10 +148,9 @@ public class KnowmeApplicationTests {
         ConfigurationParser cp = new ConfigurationParser(warnings);
         Configuration config = cp.parseConfiguration(configFile);
         DefaultShellCallback callback = new DefaultShellCallback(overwrite);
-        MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, 		warnings);
+        MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
         myBatisGenerator.generate(null);
     }
-
 
 
 }
