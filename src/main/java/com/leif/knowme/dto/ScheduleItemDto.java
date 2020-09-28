@@ -11,6 +11,7 @@ public class ScheduleItemDto {
     private Date planEndTime;
     private Date realStartTime;
     private Date realEndTime;
+    private Integer consumed;
     private Integer orderNo;
     private Integer status;
 
@@ -94,6 +95,14 @@ public class ScheduleItemDto {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getConsumed() {
+        return consumed;
+    }
+
+    public void setConsumed(Integer consumed) {
+        this.consumed = consumed;
     }
 
     @Override

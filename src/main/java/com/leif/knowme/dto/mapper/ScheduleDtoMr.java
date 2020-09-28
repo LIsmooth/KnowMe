@@ -13,7 +13,6 @@ public interface ScheduleDtoMr {
 
     @Mapping(target = "type", source = "todoDto.type")
     @Mapping(target = "planConsumed", source = "todoDto.planConsumed")
-    @Mapping(target = "realConsumed", source = "todoDto.realConsumed")
     @Mapping(target = "eventMsg", source = "todoDto.eventMsg")
     ScheduleResponse.ScheduleItemVo scheduleItemDto2ScheduleItemVo(ScheduleItemDto scheduleItemDto);
 

@@ -10,7 +10,6 @@ public class TodoDto {
     String todoId;
     String accountId;
     Integer planConsumed;
-    Integer realConsumed;
     Integer type;
     String eventMsg;
     Integer status;
@@ -47,14 +46,6 @@ public class TodoDto {
 
     public void setPlanConsumed(Integer planConsumed) {
         this.planConsumed = planConsumed;
-    }
-
-    public Integer getRealConsumed() {
-        return realConsumed;
-    }
-
-    public void setRealConsumed(Integer realConsumed) {
-        this.realConsumed = realConsumed;
     }
 
     public String getEventMsg() {

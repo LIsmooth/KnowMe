@@ -2,7 +2,6 @@ package com.leif.knowme.api.response;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.leif.knowme.dto.ScheduleDto;
 
 import java.util.Date;
 import java.util.List;
@@ -39,7 +38,7 @@ public class ScheduleResponse {
         private Integer status;
         private Integer type;
         private Integer planConsumed;
-        private Integer realConsumed;
+        private Integer consumed;
         private String eventMsg;
 
         public String getItemId() {
@@ -114,12 +113,12 @@ public class ScheduleResponse {
             this.planConsumed = planConsumed;
         }
 
-        public Integer getRealConsumed() {
-            return realConsumed;
+        public Integer getConsumed() {
+            return consumed;
         }
 
-        public void setRealConsumed(Integer realConsumed) {
-            this.realConsumed = realConsumed;
+        public void setConsumed(Integer consumed) {
+            this.consumed = consumed;
         }
 
         public String getEventMsg() {
