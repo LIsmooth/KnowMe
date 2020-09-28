@@ -14,4 +14,4 @@ mybatis:
   type-aliases-package: com.leif.knowme.model
   config-location: classpath:mybatis/mybatis-config.xml
 logging:
-  path: logs
+  path: /data/logs

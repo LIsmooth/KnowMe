@@ -1,10 +1,10 @@
-package com.leif.knowme.api.response;
+package com.leif.knowme.pojo;
 
-public class WxLoginResponse {
+public class AuthInfo {
     private String token;
     private Long expiration;
 
-    public WxLoginResponse(String token, Long expiration) {
+    public AuthInfo(String token, Long expiration) {
         this.token = token;
         this.expiration = expiration;
     }

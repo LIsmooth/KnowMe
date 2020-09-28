@@ -1,6 +1,8 @@
 package com.leif.knowme.controller;
 
+import com.leif.knowme.api.response.WxLoginResponse;
 import com.leif.knowme.exception.AppException;
+import com.leif.knowme.pojo.AuthInfo;
 import com.leif.knowme.pojo.WxUserAccount;
 import com.leif.knowme.pojo.WxUserInfo;
 import com.leif.knowme.service.AccountService;
@@ -31,19 +33,20 @@ public class WxController {
 
     Logger logger = LoggerFactory.getLogger(getClass());
 
-    @PostMapping(value = "/register", headers = "Accept=application/json")
-    public void wxRegister(@RequestBody Map<String, String> params) throws AppException {
-        String code = params.get("code");
-        String encryptedData = params.get("encryptedData");
-        String iv = params.get("iv");
-
-        WxUserAccount wxUserAccount = wxService.wxLogin(code);
-        WxUserInfo userInfo = CryptUtil.wxDecodeUserInfo(encryptedData, wxUserAccount.getSessionKey(), iv);
-    }
+//    @PostMapping(value = "/register", headers = "Accept=application/json")
+//    public void wxRegister(@RequestBody Map<String, String> params) throws AppException {
+//        String code = params.get("code");
+//        String encryptedData = params.get("encryptedData");
+//        String iv = params.get("iv");
+//
+//        WxUserAccount wxUserAccount = wxService.wxLogin(code);
+//        WxUserInfo userInfo = CryptUtil.wxDecodeUserInfo(encryptedData, wxUserAccount.getSessionKey(), iv);
+//    }
 
     @GetMapping(value = "/login/{code}")
-    public Map<String,Object> wxLogin(@PathVariable String code) throws AppException {
+    public WxLoginResponse wxLogin(@PathVariable String code) throws AppException {
         WxUserAccount wxUserAccount = wxService.wxLogin(code);
-        return jwtUtils.doGenerateToken(wxUserAccount.getAccountId());
+        AuthInfo authInfo = jwtUtils.doGenerateToken(wxUserAccount.getAccountId());
+        return new WxLoginResponse(authInfo.getToken(),authInfo.getExpiration());
     }
 }

@@ -1,6 +1,7 @@
 package com.leif.knowme.util;
 
 import com.leif.knowme.exception.AuthException;
+import com.leif.knowme.pojo.AuthInfo;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -10,8 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Function;
 
 @Component
@@ -45,17 +44,14 @@ public class JwtUtils implements Serializable {
     //2. Sign the JWT using the HS512 algorithm and secret key.
     //3. According to JWS Compact Serialization(https://tools.ietf.org/html/draft-ietf-jose-json-web-signature-41#section-3.1)
     //   compaction of the JWT to a URL-safe string
-    public Map<String, Object> doGenerateToken(String subject, Integer second) {
+    public AuthInfo doGenerateToken(String subject, Integer second) {
 
         int availableSeconds = second == null ? JWT_TOKEN_VALIDITY : second;
         Date expiration = new Date(System.currentTimeMillis() + availableSeconds * 1000);
         String token= Jwts.builder().setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(expiration)
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
-        Map<String,Object> authInfo=new HashMap<>(2);
-        authInfo.put("token", token);
-        authInfo.put("expiration", expiration.getTime());
-        return authInfo;
+        return new AuthInfo(token,expiration.getTime());
     }
 
     //validate token
@@ -68,7 +64,7 @@ public class JwtUtils implements Serializable {
         }
     }
 
-    public Map<String, Object> doGenerateToken(String accountId) {
+    public AuthInfo doGenerateToken(String accountId) {
         return this.doGenerateToken(accountId, null);
     }
 }

@@ -28,11 +28,11 @@
             <!-- 文件最大保存历史数量 -->
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>
-<!--        <filter class="ch.qos.logback.classic.filter.LevelFilter">-->
-<!--            <level>WARN</level>-->
-<!--            <onMatch>ACCEPT</onMatch>-->
-<!--            <onMismatch>DENY</onMismatch>-->
-<!--        </filter>-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
         <encoder>
             <pattern>${FILE_LOG_PATTERN}</pattern>
         </encoder>

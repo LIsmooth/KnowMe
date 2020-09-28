@@ -129,7 +129,7 @@ public class KnowmeApplicationTests {
     @Test
     public void tokenTest() throws InterruptedException {
         String accountId = "HelloLeif";
-        String token = jwtUtils.doGenerateToken(accountId,2).get("token").toString();
+        String token = jwtUtils.doGenerateToken(accountId,2).getToken();
         System.out.println(token);
         String accountId2 = null;
         try {
