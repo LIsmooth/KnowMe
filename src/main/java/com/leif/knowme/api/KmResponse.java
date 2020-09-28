@@ -1,9 +1,14 @@
 package com.leif.knowme.api;
 
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class KmResponse {
 
-    public static final int KM_RESPONSE_CODE_SUCC=0;
-    public static final int KM_RESPONSE_CODE_TRANSFER=10000;
+    public static final int KM_RESPONSE_CODE_SUCC = 0;
+    public static final int KM_RESPONSE_CODE_SYSTEM_ERR = 5000;
+    public static final int KM_RESPONSE_CODE_TRANSFER_ERR = 10000;
 
 
     private int code;

@@ -119,7 +119,8 @@ public interface WxUserInfoMapper {
 
     @Insert({
             "insert into t_wx_user_info (open_id, session_key) " +
-                    "values (#{openId,jdbcType=VARCHAR}, #{sessionKey,jdbcType=VARCHAR})"
+                    "values (#{openId,jdbcType=VARCHAR}, #{sessionKey,jdbcType=VARCHAR})" +
+                    " on duplicate key update session_key=values (session_key)"
     })
-    int insertLogin(WxUserInfo record);
+    int insertOrUpdateLogin(WxUserInfo record);
 }

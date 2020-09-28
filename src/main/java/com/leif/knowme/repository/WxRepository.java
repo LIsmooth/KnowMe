@@ -15,6 +15,6 @@ public class WxRepository {
         WxUserInfo userInfo=new WxUserInfo();
         userInfo.setOpenId(wxLoginInfo.getOpenid());
         userInfo.setSessionKey(wxLoginInfo.getSessionKey());
-        mapper.insertLogin(userInfo);
+        mapper.insertOrUpdateLogin(userInfo);
     }
 }

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 @ControllerAdvice
-public class ResponseAdvisor implements ResponseBodyAdvice<Object> {
+public class ResponseWrapperAdvisor implements ResponseBodyAdvice<Object> {
     Logger logger = LoggerFactory.getLogger(getClass());
 
     @Override
@@ -34,7 +34,7 @@ public class ResponseAdvisor implements ResponseBodyAdvice<Object> {
                 return convertToJsonString(kmResponse);
             } catch (JsonProcessingException e) {
                 logger.error("convertToJsonString error\n", e);
-                return KmResponse.buildErrorResponse(KmResponse.KM_RESPONSE_CODE_TRANSFER, e.getMessage());
+                return KmResponse.buildErrorResponse(KmResponse.KM_RESPONSE_CODE_TRANSFER_ERR, e.getMessage());
             }
         }
         return kmResponse;
